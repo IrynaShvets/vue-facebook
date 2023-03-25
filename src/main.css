@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #ead7d1;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+}
+
+ul {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+@layer components {
+    label.required {
+        @apply before:text-red-600 before:content-['*'] before:mr-1;
+    }
+ 
+    .form-input {
+        @apply p-1 border bg-gray-100 disabled:opacity-50;
+    }
+ 
+    .btn {
+        @apply inline-flex items-center gap-2 justify-center p-2 font-bold relative disabled:!opacity-50 disabled:!cursor-progress;
+    }
+ 
+    .btn-primary {
+        @apply text-white bg-blue-600 hover:bg-blue-500;
+    }
+
+    
+}
