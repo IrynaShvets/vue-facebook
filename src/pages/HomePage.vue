@@ -1,10 +1,9 @@
 <template>
-    <div class="bg-[#F5ECCD]">
+    <div>
       <container-app>
-      
+        <h1>Home page</h1>
     </container-app>
     </div>
-    
   </template>
   
   <script>

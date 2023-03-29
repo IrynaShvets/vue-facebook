@@ -1,5 +1,6 @@
 <template>
-    <form @submit.prevent="() => {}" novalidate>
+  <container-app>
+    <form @submit.prevent="() => {}" novalidate class="bg-[#4D7c8a] w-[500px] h-auto">
       <div class="flex flex-col mx-auto md:w-96 w-full">
         <h1 class="text-2xl font-bold mb-4 text-center">Register</h1>
         <div class="flex flex-col gap-2 mb-4">
@@ -13,7 +14,7 @@
             required
           />
         </div>
-   
+
         <div class="flex flex-col gap-2 mb-4">
           <label for="email" class="required">Email</label>
           <input
@@ -25,7 +26,7 @@
             required
           />
         </div>
-   
+
         <div class="flex flex-col gap-2 mb-4">
           <label for="password" class="required">Password</label>
           <input
@@ -37,7 +38,7 @@
             required
           />
         </div>
-   
+
         <div class="flex flex-col gap-2">
           <label for="password_confirmation" class="required">
             Confirm password
@@ -51,14 +52,34 @@
             required
           />
         </div>
-   
+
         <div class="border-t h-[1px] my-6"></div>
-   
+
         <div class="flex flex-col gap-2">
           <button type="submit" class="btn btn-primary">Register</button>
         </div>
       </div>
     </form>
-  </template>
+  </container-app>
+</template>
+
+<script>
+import ContainerApp from "../shared/ContainerApp.vue";
+
+export default {
+  name: "RegisterPage",
+  components: {
+      ContainerApp,
+    },
+    data() {
+      return {
+       
+      };
+    },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>
 
   
