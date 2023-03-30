@@ -53,20 +53,52 @@
             </ul>
           </div>
         </nav>
+
+        <div v-if="user">
+          <span>{{ user.name }}</span>
+        </div>
+
+        <div>
+          <button @click="logout" class="py-1 px-2 rounded bg-white">
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   </header>
 </template>
   
-  <script>
+<script>
+import { useAuthStore } from "@/store/auth";
+import { mapState, mapActions } from "pinia";
+
 export default {
   name: "HeaderApp",
+
   data() {
     return {};
   },
+
+  computed: {
+    ...mapState(useAuthStore, ["user"]),
+  },
+
+  methods: {
+    ...mapActions(useAuthStore, ["logout"]),
+
+    logout() {
+
+      const store = useAuthStore();
+      store.logout();
+      this.$router.push({ name: "login" });
+
+      alert("You have successfully logged out of your account.");
+    },
+  },
 };
 </script>
-  <style>
+
+<style>
 .active {
   color: #1b4079;
 }
