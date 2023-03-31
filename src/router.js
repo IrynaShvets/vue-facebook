@@ -22,9 +22,7 @@ const routes = [
     path: "/posts",
     name: "posts",
     component: () => import("@/pages/PostPage.vue"),
-    meta: {
-      requiresAuth: true,
-    },
+    
   },
   { 
     path: '/:pathMatch(.*)*', 
@@ -45,14 +43,14 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!requiresAuth.user) {
+    if (!requiresAuth) {
       next({ name: 'login' });
       return;
     }
   }
 
   if (to.matched.some((record) => record.meta.hideForAuth)) {
-    if (requiresAuth.user) {
+    if (requiresAuth) {
       next({ name: 'home' });
       return;
     }
