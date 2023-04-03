@@ -11,7 +11,7 @@
 
       <nav class="relative flex items-center justify-center">
         <div
-          v-if="user.name"
+          v-if="authUserName"
           class="container px-4 mx-auto flex flex-wrap items-center justify-between"
         >
           <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
@@ -59,8 +59,8 @@
             />
           </div>
 
-          <div v-if="user.name">
-            <span class="text-white">{{ user.name }}</span>
+          <div v-if="authUserName">
+            <span class="text-white">{{ authUserName }}</span>
           </div>
 
           <div class="flex flex-col relative">
@@ -79,7 +79,7 @@
             <div class="absolute top-12 right-0" v-show="active">
               <div class="w-[200px] h-auto bg-white">
                 <div>
-                  <button @click="logout" class="py-1 px-2 rounded bg-dark">
+                  <button @click="handleLogout" class="py-1 px-2 rounded bg-dark">
                     Logout
                   </button>
                 </div>
@@ -115,7 +115,7 @@
 
 <script>
 import { useAuthStore } from "@/store/auth";
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 
 export default {
   name: "HeaderApp",
@@ -123,21 +123,22 @@ export default {
   data() {
     return {
       active: false,
-      user: {
-        name: localStorage.getItem("user"),
-      },
     };
+  },
+
+  computed: {
+    ...mapState(useAuthStore, ["authUserName"]),
   },
 
   methods: {
     ...mapActions(useAuthStore, ["logout"]),
 
-    logout() {
-      const store = useAuthStore();
-      store.logout();
-      this.user.name = "";
-      this.$router.push({ name: "login" });
-      alert("You have successfully logged out of your account.");
+    handleLogout() {
+      if (this.logout()) {
+        this.logout();
+        this.$router.push({ name: "login" });
+        alert("You have successfully logged out of your account.");
+      }
     },
   },
 

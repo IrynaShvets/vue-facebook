@@ -1,6 +1,8 @@
 <template>
   <div>
-    <form>
+    <header-app />
+    <container-app>
+      <form>
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-base font-semibold leading-7 text-gray-900">
@@ -24,7 +26,7 @@
                     id="title"
                     autocomplete="title"
                     class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="janesmith"
+                    placeholder="Post title"
                   />
                 </div>
               </div>
@@ -116,13 +118,13 @@
                   </svg>
                   <div class="mt-4 flex text-sm leading-6 text-gray-600">
                     <label
-                      for="file-upload"
+                      for="image"
                       class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                     >
                       <span>Upload a file</span>
                       <input
-                        id="file-upload"
-                        name="file-upload"
+                        id="image"
+                        name="image"
                         type="file"
                         class="sr-only"
                       />
@@ -154,15 +156,27 @@
         </button>
       </div>
     </form>
+    </container-app>
+    <footer-app />
   </div>
 </template>
 
 <script>
+import ContainerApp from "../../shared/ContainerApp.vue";
+
 export default {
   name: "CreatePostPage",
+  components: {
+    ContainerApp,
+  },
 
   data() {
-    return {};
+    return {
+      title: "",
+      description: "",
+      body: "",
+      image: "",
+    };
   },
 };
 </script>

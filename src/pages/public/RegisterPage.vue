@@ -154,7 +154,7 @@ export default {
     ...mapState(useAuthStore, ["users"]),
   },
   methods: {
-    ...mapActions(useAuthStore, ["getUsers", "register"]),
+    ...mapActions(useAuthStore, ["getUser", "register"]),
 
     imagePreview(event) {
       let selectedFile = event.target.files[0];
@@ -201,10 +201,7 @@ export default {
         });
     },
   },
-  mounted() {
-    this.getUsers();
-    // console.log("респонс", g)
-  },
+  
 };
 </script>
 

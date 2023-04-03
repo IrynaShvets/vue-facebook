@@ -5,7 +5,7 @@
       <main>
         <section>
           <h1 class="text-gray-900">All posts</h1>
-          <ul v-if="posts">
+          <ul v-if="token && posts">
             <li
               :id="post.id"
               v-for="post in posts"
@@ -115,22 +115,17 @@ export default {
   data() {
     return {
       active: false,
-      showModal: false,
+      
       id: null,
     };
   },
 
   computed: {
-    ...mapState(useAuthStore, ["posts", "total", "current_page", "per_page"]),
+    ...mapState(useAuthStore, ["posts", "token", "total", "current_page", "per_page"]),
   },
 
   methods: {
     ...mapActions(useAuthStore, ["getPosts"]),
-
-    showModalGetId(currentId) {
-      this.showModal = true;
-      this.id = currentId;
-    },
 
     onPageClick(event) {
       this.currentPage = event;

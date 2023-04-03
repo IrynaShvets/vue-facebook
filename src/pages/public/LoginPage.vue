@@ -111,21 +111,26 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["users"]),
+    ...mapState(useAuthStore, ["token"]),
   },
+
   methods: {
-    ...mapActions(useAuthStore, ["getUsers", "login"]),
+    ...mapActions(useAuthStore, ["login", "getUser"]),
 
     handleSubmit() {
       const userData = {
         email: this.email,
         password: this.password,
       };
+      
       this.login(userData)
         .then(() => {
-          this.$router.push({ name: "home" });
+          if(this.token !== null) {
+            this.$router.push({ name: "home" });
+          }
         })
         .catch((errors) => {
+          
           switch (errors.status) {
             case 401:
               this.errors.email = errors.data.email;
@@ -140,13 +145,11 @@ export default {
             default:
               this.errorsStatus = "Another validation error";
           }
+          console.log(this.errors.email)
         });
     },
   },
-  mounted() {
-    this.getUsers();
-    // console.log("респонс", g)
-  },
+  
 };
 </script>
 
