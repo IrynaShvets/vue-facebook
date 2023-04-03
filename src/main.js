@@ -1,6 +1,7 @@
 import { createApp, markRaw  } from 'vue';
 import App from './App.vue';
 import { createPinia } from 'pinia';
+import '@ocrv/vue-tailwind-pagination/styles';
 import './main.css';
 import HeaderApp from './components/HeaderApp.vue';
 import FooterApp from './components/FooterApp.vue';

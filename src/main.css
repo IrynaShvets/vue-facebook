@@ -9,7 +9,7 @@
 }
 
 body {
-    background: #cbdf90;
+    background: #ffecd1;
     font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-size: 14px;
@@ -37,6 +37,13 @@ img {
     display: block;
     max-width: 100%;
     height: auto;
+}
+
+main {
+	padding: 1rem;
+	max-width: 768px;
+	margin: 0 auto;
+	will-change: transform, opacity;
 }
 
 @layer components {
