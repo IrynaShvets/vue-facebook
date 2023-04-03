@@ -166,7 +166,7 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password,
-        image: this.image,
+        // image: this.image,
       };
       this.register(userData)
         .then(() => {
@@ -193,6 +193,14 @@ export default {
               this.errors.email = errors.data.errors.email;
               this.errors.password = errors.data.errors.password;
               // this.errors.confirmPassword = errors.data.password_confirmed;
+              break;
+
+            case 500:
+              // this.errors.name = errors.data.errors.name;
+              // this.errors.email = errors.data.errors.email;
+              // this.errors.password = errors.data.errors.password;
+              // this.errors.confirmPassword = errors.data.password_confirmed;
+              console.log(errors.data.errors)
               break;
 
             default:

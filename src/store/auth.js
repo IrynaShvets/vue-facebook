@@ -35,7 +35,7 @@ export const useAuthStore = defineStore("auth", {
         axios
           .get("http://localhost:80/api/user", {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${this.token}`,
             },
           })
           .then((response) => {
@@ -115,7 +115,7 @@ export const useAuthStore = defineStore("auth", {
         axios
           .get("http://localhost:80/api/post/all", {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${this.token}`,
             },
           })
           .then((response) => {
