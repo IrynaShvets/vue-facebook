@@ -16,8 +16,36 @@
           Sign up your account
           </h2>
 
-          <input type="file" name="image" class="form-control" @change="imagePreview($event)">
+          <div class="border-t h-[1px] my-4"></div>
+          <!-- <input type="file" name="image" class="form-control" @change="imagePreview($event)"> -->
 
+          <div>
+          <div>
+            <label>Image</label>
+
+            <input
+              ref="image"
+              id="image"
+              type="file"
+              name="image"
+              accept="image/*"
+              
+              style="border: none"
+              @change="imagePreview($event)"
+            />
+          </div>
+          <div v-if="this.image_file">
+            <img
+              :src="this.image_file"
+              
+              class="inline-block h-10 w-10 rounded-full"
+              
+              alt="Preview"
+            />
+          </div>
+        </div>
+
+          
           <div class="flex flex-col gap-2 mb-4">
             <label for="name" class="required">Name</label>
             <input
@@ -147,27 +175,43 @@ export default {
         // confirmPassword: "",
       },
       errorsStatus: [],
+
+      formData: new FormData(),
+      file: null,
+      image_file: "",
     };
   },
 
   computed: {
     ...mapState(useAuthStore, ["users"]),
   },
+
   methods: {
     ...mapActions(useAuthStore, ["getUser", "register"]),
 
-    imagePreview(event) {
-      let selectedFile = event.target.files[0];
-      this.image = selectedFile;
+    imagePreview(e) {
+      // let selectedFile = event.target.files[0];
+      // this.image = selectedFile;
+      
+      this.file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      reader.onload = (e) => {
+        this.image_file = e.target.result;
+      };
+      console.log(this.file);
+    
     },
 
     handleSubmit() {
+      
       const userData = {
         name: this.name,
         email: this.email,
         password: this.password,
-        // image: this.image,
+        image: this.formData.append("image", this.file, this.file.name),
       };
+      
       this.register(userData)
         .then(() => {
           this.$router.push({ name: "home" });

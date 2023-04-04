@@ -1,4 +1,5 @@
 import HomePage from "./pages/protected/HomePage.vue";
+import AllUsersPage from "./pages/protected/AllUsersPage.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import {useAuthStore} from "./store/auth"
 
@@ -19,10 +20,19 @@ const routes = [
     component: () => import("@/pages/public/LoginPage.vue"),
   },
   {
+    path: "/own-posts",
+    name: "ownPosts",
+    component: () => import("@/pages/protected/PostPage.vue"),
+  },
+  {
     path: "/posts",
     name: "posts",
-    component: () => import("@/pages/protected/PostPage.vue"),
-
+    component: () => import("@/pages/protected/AllPostsPage.vue"),
+  },
+  {
+    path: "/users",
+    name: "users",
+    component: AllUsersPage,
   },
   {
     path: "/posts-create",

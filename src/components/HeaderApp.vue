@@ -34,7 +34,7 @@
             </li>
             <li class="nav-item">
               <router-link
-                to="/posts"
+                to="/posts-create"
                 active-class="active-link"
                 exact-active-class="exact-active-link"
                 class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
