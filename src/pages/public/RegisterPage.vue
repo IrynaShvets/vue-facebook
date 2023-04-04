@@ -172,11 +172,12 @@ export default {
         name: "",
         email: "",
         password: "",
+        
         // confirmPassword: "",
       },
       errorsStatus: [],
 
-      formData: new FormData(),
+      // formData: new FormData(),
       file: null,
       image_file: "",
     };
@@ -204,20 +205,32 @@ export default {
     },
 
     handleSubmit() {
-      
+    
       const userData = {
         name: this.name,
         email: this.email,
         password: this.password,
-        image: this.formData.append("image", this.file, this.file.name),
+        // image: this.image,
+        // image: this.formData.append("image", this.file, this.file.name),
       };
-      
+      // this.image = this.formData.append("image", this.file, this.file.name);
+      // this.name = this.formData.append("name", this.name);
+      // this.email = this.formData.append("email", this.email);
+      // this.password = this.formData.append("password", this.password);
+
+//       const formData = new FormData();
+//       formData.append("image", this.file, this.file.name);
+//       formData.append("name", this.name);
+//       formData.append("email", this.email);
+//       formData.append("password", this.password);
+// console.log(formData)
       this.register(userData)
         .then(() => {
           this.$router.push({ name: "home" });
           
         })
         .catch((errors) => {
+          console.log(errors)
           switch (errors.status) {
             case 400:
               this.errors.name = errors.data.name;
@@ -240,10 +253,10 @@ export default {
               break;
 
             case 500:
-              // this.errors.name = errors.data.errors.name;
-              // this.errors.email = errors.data.errors.email;
-              // this.errors.password = errors.data.errors.password;
-              // this.errors.confirmPassword = errors.data.password_confirmed;
+              this.errors.name = errors.data.message;
+              this.errors.email = errors.data.message;
+              this.errors.password = errors.data.message;
+              this.errors.confirmPassword = errors.data.message;
               console.log(errors.data.errors)
               break;
 

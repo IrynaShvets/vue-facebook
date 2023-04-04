@@ -79,11 +79,13 @@ export const useAuthStore = defineStore("auth", {
       return new Promise((resolve, reject) => {
         axios
           .post("http://localhost:80/api/register", {
-            ...data,
-            headers: {
+            ...data } , 
+            {
+              headers: {
               "Content-Type": "multipart/form-data",
             },
-          })
+          },
+          )
           .then((response) => {
             this.token = response.data.access_token;
             this.userName = response.data.user.name;
@@ -102,7 +104,12 @@ export const useAuthStore = defineStore("auth", {
           .then(() => {
             this.userName = "";
             this.token = null;
-            this.account = {};
+            this.userId = "";
+            this.posts = [],
+            this.users = [],
+            this.total = null,
+            this.current_page = 1,
+            this.per_page = 10,
     
             resolve();
           })
@@ -125,6 +132,7 @@ export const useAuthStore = defineStore("auth", {
               return;
             }
             console.log(response.data.data)
+
             this.posts = response.data.data;
             this.current_page = response.data.meta.current_page;
             this.per_page = response.data.meta.per_page;
@@ -141,16 +149,19 @@ export const useAuthStore = defineStore("auth", {
       return new Promise((resolve, reject) => {
         axios
           .post("http://localhost:80/api/post/store", {
-            ...data,
+            ...data }, {
             headers: {
               "Content-Type": "multipart/form-data",
               "Authorization": `Bearer ${this.token}`,
             },
-          })
+          },
+          )
           .then((response) => {
             if (!response) {
               return;
             }
+            this.token = response.data.access_token;
+            this.userName = response.data.user.name;
             console.log(response)
             resolve();
           })

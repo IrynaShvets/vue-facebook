@@ -126,6 +126,12 @@
                   PNG, JPG, GIF up to 10MB
                 </p>
               </div>
+              <span class="text-[#ff0012]" v-if="errors.image">
+                  {{ errors.image.toString() }}
+                </span>
+                <span class="text-[#ff0012]" v-if="errorsStatus">
+                  {{ errorsStatus.toString() }}
+                </span>
 
               <div class="border-t h-[1px] my-4"></div>
 
@@ -176,6 +182,8 @@ export default {
         title: "",
         description: "",
         body: "",
+        user_id: "",
+        image: "",
       },
       errorsStatus: [],
     };
@@ -209,23 +217,37 @@ export default {
           console.log(errors);
           switch (errors.status) {
             case 400:
-              this.errors.title = errors.data.message;
-              this.errors.description = errors.data.message;
-              this.errors.body = errors.data.message;
+              this.errors.title = errors.data.error.title;
+              this.errors.description = errors.data.error.description;
+              this.errors.body = errors.data.error.body;
+              this.errors.user_id = errors.data.error.user_id;
+              this.errors.image = errors.data.error.image;
               break;
 
             case 401:
               this.errors.title = errors.data.message;
               this.errors.description = errors.data.message;
               this.errors.body = errors.data.message;
+              this.errors.user_id = errors.data.message;
+              this.errors.image = errors.data.message;
               break;
 
             case 422:
               this.errors.title = errors.data.errors.title;
               this.errors.description = errors.data.errors.description;
               this.errors.body = errors.data.errors.body;
+              this.errors.user_id = errors.data.errors.user_id;
+              this.errors.image = errors.data.errors.image;
               break;
 
+            case 500:
+              this.errors.title = errors.statusText;
+              this.errors.description = errors.statusText;
+              this.errors.body = errors.statusText;
+              this.errors.user_id = errors.statusText;
+              this.errors.image = errors.statusText;
+              break;
+              
             default:
               this.errorsStatus = "Another validation error";
           }

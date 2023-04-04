@@ -40,6 +40,11 @@ const routes = [
     component: () => import("@/pages/protected/CreatePostPage.vue"),
   },
   {
+    path: "/post-update",
+    name: "postUpdate",
+    component: () => import("@/pages/protected/UpdatePostPage.vue"),
+  },
+  {
     path: "/avatar",
     name: "avatar",
     component: () => import("@/pages/protected/AvatarPage.vue"),
