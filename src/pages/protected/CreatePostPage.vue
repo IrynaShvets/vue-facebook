@@ -6,6 +6,11 @@
         class="flex min-h-full items-center justify-center p-4 sm:px-6 lg:px-8"
       >
         <div class="w-full rounded">
+          <div v-if="success" class="text-dark">
+                <button type="button"></button>
+                <strong>{{success}}</strong>
+            </div>
+
           <form @submit.prevent="handleSubmit" novalidate>
             <div class="flex flex-col w-full">
               <img
@@ -91,8 +96,6 @@
                 </span>
               </div>
 
-              <!-- <input type="file" name="image" class="form-control" @change="imagePreview($event)" /> -->
-
               <div class="text-center bg-white">
                 <svg
                   class="mx-auto h-12 w-12 text-gray-300"
@@ -109,18 +112,34 @@
                 <div class="mt-4 flex text-sm leading-6 text-gray-600">
                   <label
                     for="image"
-                    class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                    class="relative cursor-pointer rounded-md bg-indigo-600 font-semibold text-white focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                   >
                     <span>Upload a file</span>
                     <input
+                      ref="image"
                       id="image"
-                      name="image"
                       type="file"
-                      class="sr-only"
+                      name="image"
+                      accept="image/*"
+                      style="border: none"
                       @change="imagePreview($event)"
                     />
                   </label>
                   <p class="pl-1">or drag and drop</p>
+
+                  <!-- <div v-if="image">
+                    <img v-bind:src="image" width="100" height="100"/>
+                  </div> -->
+
+                </div>
+                <div v-if="image_file">
+                  <img
+                    :src="image_file"
+                    
+                    class="inline-block h-10 w-10 rounded-full"
+                    
+                    alt="Preview"
+                  />
                 </div>
                 <p class="text-xs leading-5 text-gray-600">
                   PNG, JPG, GIF up to 10MB
@@ -160,7 +179,7 @@
     <footer-app />
   </div>
 </template>
-
+ <!-- @change="imagePreview($event)" -->
 <script>
 import ContainerApp from "../../shared/ContainerApp.vue";
 import { mapState, mapActions } from "pinia";
@@ -185,7 +204,10 @@ export default {
         user_id: "",
         image: "",
       },
-      errorsStatus: [],
+      success: '',
+      errorsStatus: "",
+      // imagePreview: null,
+      image_file: "",
     };
   },
 
@@ -196,9 +218,13 @@ export default {
   methods: {
     ...mapActions(useAuthStore, ["createPost"]),
 
-    imagePreview(event) {
-      let selectedFile = event.target.files[0];
-      this.image = selectedFile;
+    imagePreview(e) {
+      this.image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(this.image);
+      reader.onload = (e) => {
+        this.image_file = e.target.result;
+      };
     },
 
     handleSubmit() {
@@ -210,12 +236,15 @@ export default {
         image: this.image,
       };
       this.createPost(postData)
-        .then(() => {
+        .then((response) => {
+         console.log(response)
+          // this.success = response.data.success;
           this.$router.push({ name: "posts" });
         })
         .catch((errors) => {
           console.log(errors);
-          switch (errors.status) {
+          if (errors?.status) {
+            switch (errors.status) {
             case 400:
               this.errors.title = errors.data.error.title;
               this.errors.description = errors.data.error.description;
@@ -251,6 +280,8 @@ export default {
             default:
               this.errorsStatus = "Another validation error";
           }
+          }
+          
         });
     },
   },

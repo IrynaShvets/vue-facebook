@@ -51,7 +51,15 @@
             </li>
           </ul>
 
-          <div class="flex -space-x-1 overflow-hidden">
+          <div v-if="authUserImage" class="flex -space-x-1 overflow-hidden">
+            <img
+              class="inline-block h-10 w-10 rounded-full"
+              :src="'http://localhost:80/storage/' +authUserImage"
+              alt=""
+            />
+          </div>
+
+          <div v-else class="flex -space-x-1 overflow-hidden">
             <img
               class="inline-block h-10 w-10 rounded-full"
               src="https://i.gyazo.com/50c000c0e4715eba3a2d778c01ac1c5c.png"
@@ -127,7 +135,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["authUserName"]),
+    ...mapState(useAuthStore, ["authUserName", "authUserImage"]),
   },
 
   methods: {

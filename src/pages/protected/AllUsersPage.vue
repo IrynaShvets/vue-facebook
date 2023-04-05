@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <header-app />
-    <container-app>
-      <main>
-        <section>
+  <div class="relative">
+    <header-app class="fixed z-10 top-0 left-0 w-screen" />
+    <sidebar-home class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"/>
+    
+        <section class="absolute overflow-y-auto top-[80px] right-[20%]">
           <h1 class="text-gray-900">All Users</h1>
           <ul v-if="userToken && allUsers">
             <li
@@ -41,14 +41,13 @@
             />
           </div>
         </section>
-      </main>
-    </container-app>
-    <footer-app />
+      
+    <footer-app class="fixed bottom-0 left-0"/>
   </div>
 </template>
   
   <script>
-import ContainerApp from "../../shared/ContainerApp.vue";
+// import ContainerApp from "../../shared/ContainerApp.vue";
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
@@ -56,7 +55,7 @@ import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 export default {
   name: "AllUsersPage",
   components: {
-    ContainerApp,
+    
     VueTailwindPagination,
   },
 

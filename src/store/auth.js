@@ -2,12 +2,13 @@ import axios from "axios";
 import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", {
-  
   state: () => ({
-    
     token: null,
     userName: "",
     userId: "",
+    userImage: null,
+    userEmail: "",
+    userCreated: "",
 
     posts: [],
     users: [],
@@ -15,43 +16,24 @@ export const useAuthStore = defineStore("auth", {
     total: null,
     current_page: 1,
     per_page: 10,
-
   }),
 
   getters: {
     userToken: (state) => state.token,
     authUserName: (state) => state.userName,
     authUserId: (state) => state.userId,
+    authUserImage: (state) => state.userImage,
+    authUserEmail: (state) => state.userEmail,
+    authUserCreated: (state) => state.userCreated,
 
     allUsers: (state) => state.users,
     allPosts: (state) => state.posts,
     totalPosts: (state) => state.total,
     currentPage: (state) => state.current_page,
     perPage: (state) => state.per_page,
-
   },
 
   actions: {
-    // getUser() {
-    //   return new Promise((resolve, reject) => {
-    //     axios
-    //       .get("http://localhost:80/api/user", {
-    //         headers: {
-    //           Authorization: `Bearer ${this.token}`,
-    //         },
-    //       })
-    //       .then((response) => {
-    //           this.account.id = response.data.data.id;
-    //           this.account.name = response.data.data.name;
-    //           this.account.email = response.data.data.email;
-    //           console.log(response)
-    //           resolve();
-    //       })
-    //       .catch((error) => {
-    //         reject(error.response);
-    //       });
-    //   });
-    // },
 
     login(data) {
       return new Promise((resolve, reject) => {
@@ -60,14 +42,20 @@ export const useAuthStore = defineStore("auth", {
             ...data,
           })
           .then((response) => {
-            if (response.data.access_token) {
+            if (!response) {
+              return;
+            }
+            if (response.status === 200 && response.data.access_token) {
               this.token = response.data.access_token;
               this.userName = response.data.user.name;
               this.userId = response.data.user.id;
-          
-              console.log(response)
+              this.userImage = response.data.user.image;
+              this.userEmail = response.data.user.email;
+              this.userCreated = response.data.user.created_at;
+             
+              resolve();
+              console.log(response);
             }
-            resolve();
           })
           .catch((error) => {
             reject(error.response);
@@ -78,18 +66,32 @@ export const useAuthStore = defineStore("auth", {
     register(data) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:80/api/register", {
-            ...data } , 
+          .post(
+            "http://localhost:80/api/register",
+            {
+              ...data,
+            },
             {
               headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          },
+                "Content-Type": "multipart/form-data",
+              },
+            }
           )
           .then((response) => {
-            this.token = response.data.access_token;
-            this.userName = response.data.user.name;
-            resolve();
+            console.log(response);
+            if (!response) {
+              return;
+            }
+            if (response.status === 200 && response.data.access_token) {
+              this.userData = response.data.user;
+              this.token = response.data.access_token;
+              this.userName = response.data.user.name;
+              this.userId = response.data.user.id;
+              this.userImage = response.data.user.image;
+              this.userEmail = response.data.user.email;
+              this.userCreated = response.data.user.created_at;
+              resolve();
+            }
           })
           .catch((error) => {
             reject(error.response);
@@ -105,12 +107,14 @@ export const useAuthStore = defineStore("auth", {
             this.userName = "";
             this.token = null;
             this.userId = "";
-            this.posts = [],
-            this.users = [],
-            this.total = null,
-            this.current_page = 1,
-            this.per_page = 10,
-    
+            this.userImage = null;
+            this.userEmail = "";
+            this.userCreated = "";
+            this.posts = [];
+            this.users = [];
+            this.total = null;
+            this.current_page = 1;
+            this.per_page = 10;
             resolve();
           })
           .catch((error) => {
@@ -131,12 +135,14 @@ export const useAuthStore = defineStore("auth", {
             if (!response) {
               return;
             }
-            console.log(response.data.data)
-
+            console.log(response.data.data);
+            // this.token = response.data.access_token;
+            // this.userName = response.data.user.name;
             this.posts = response.data.data;
-            this.current_page = response.data.meta.current_page;
-            this.per_page = response.data.meta.per_page;
-            this.total = response.data.meta.total;
+            
+            // this.current_page = response.data.meta.current_page;
+            // this.per_page = response.data.meta.per_page;
+            // this.total = response.data.meta.total;
             resolve();
           })
           .catch((error) => {
@@ -148,13 +154,17 @@ export const useAuthStore = defineStore("auth", {
     createPost(data) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:80/api/post/store", {
-            ...data }, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              "Authorization": `Bearer ${this.token}`,
+          .post(
+            "http://localhost:80/api/post/store",
+            {
+              ...data,
             },
-          },
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${this.token}`,
+              },
+            }
           )
           .then((response) => {
             if (!response) {
@@ -162,7 +172,7 @@ export const useAuthStore = defineStore("auth", {
             }
             this.token = response.data.access_token;
             this.userName = response.data.user.name;
-            console.log(response)
+            console.log(response);
             resolve();
           })
           .catch((error) => {
@@ -183,7 +193,7 @@ export const useAuthStore = defineStore("auth", {
             if (!response) {
               return;
             }
-            console.log(response.data.data)
+            console.log(response.data.data);
             this.users = response.data.data;
             this.current_page = response.data.meta.current_page;
             this.per_page = response.data.meta.per_page;
@@ -195,8 +205,6 @@ export const useAuthStore = defineStore("auth", {
           });
       });
     },
-
-
   },
   persist: true,
 });

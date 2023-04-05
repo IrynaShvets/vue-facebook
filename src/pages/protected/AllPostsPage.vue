@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <header-app />
-    <container-app>
-      <main>
-        <section>
+  <div class="relative">
+    <header-app class="fixed z-10 top-0 left-0 w-screen" />
+    <sidebar-home class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"/>
+   
+        <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
           <h1 class="text-gray-900">All posts</h1>
           <ul v-if="userToken && allPosts">
             <li
@@ -14,13 +14,24 @@
             >
               <div class="overflow-hidden bg-white shadow sm:rounded-lg">
                 <div class="flex items-center justify-center px-4 py-5 sm:px-6">
-                  <img
-                    src="https://i.gyazo.com/da1cfd20878c36a3a53d5b9b4caf36d9.png"
-                    alt="{{ post.title }}"
-                    width="380"
-                    height="auto"
-                  />
+                  <div v-if="post.image">
+                     <img
+                      :src="'http://localhost:80/storage/' +post.image"
+                      alt="{{ post.title }}"
+                      width="380"
+                      height="auto"
+                    />
+                  </div>
 
+                  <div v-else>
+                     <img
+                      src="https://i.gyazo.com/da1cfd20878c36a3a53d5b9b4caf36d9.png"
+                      alt="{{ post.title }}"
+                      width="380"
+                      height="auto"
+                    />
+                  </div>
+                 
                   <div class="ml-10">
                     <h3 class="font-medium text-gray-500">Post title</h3>
                     <h2 class="mt-1 text-gray-900">{{ post.title }}</h2>
@@ -83,7 +94,7 @@
             </li>
           </ul>
 
-          <div class="my-20">
+          <!-- <div class="my-20">
             <VueTailwindPagination
               :current="currentPage"
               :total="totalPosts"
@@ -92,25 +103,23 @@
               text-before-input="Go to page"
               text-after-input="Forward"
             />
-          </div>
+          </div> -->
         </section>
-      </main>
-    </container-app>
-    <footer-app />
+      
+    <footer-app class="fixed bottom-0 left-0"/>
   </div>
 </template>
   
-  <script>
-import ContainerApp from "../../shared/ContainerApp.vue";
+<script>
+
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
-import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
+// import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 
 export default {
   name: "AllPostsPage",
   components: {
-    ContainerApp,
-    VueTailwindPagination,
+    // VueTailwindPagination,
   },
 
   data() {
@@ -122,9 +131,9 @@ export default {
     ...mapState(useAuthStore, [
       "userToken",
       "allPosts",
-      "currentPage",
-      "perPage",
-      "totalPosts",
+      // "currentPage",
+      // "perPage",
+      // "totalPosts",
     ]),
   },
 
