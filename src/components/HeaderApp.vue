@@ -5,7 +5,7 @@
         <img
           class="h-12 w-18"
           src="https://i.gyazo.com/93114b7cff56d5426ec1f3549083e16d.png"
-          alt="Your Company"
+          alt="logo"
         />
       </div>
 
@@ -50,11 +50,11 @@
               </router-link>
             </li>
           </ul>
-
+<!-- 'http://localhost:80/storage/' + -->
           <div v-if="authUserImage" class="flex -space-x-1 overflow-hidden">
             <img
               class="inline-block h-10 w-10 rounded-full"
-              :src="'http://localhost:80/storage/' +authUserImage"
+              :src="authUserImage"
               alt=""
             />
           </div>

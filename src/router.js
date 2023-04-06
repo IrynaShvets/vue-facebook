@@ -40,8 +40,9 @@ const routes = [
     component: () => import("@/pages/protected/CreatePostPage.vue"),
   },
   {
-    path: "/post-update",
+    path: "/post-update/:id",
     name: "postUpdate",
+    props: true,
     component: () => import("@/pages/protected/UpdatePostPage.vue"),
   },
   {

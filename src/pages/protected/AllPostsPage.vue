@@ -17,7 +17,7 @@
                   <div v-if="post.image">
                      <img
                       :src="'http://localhost:80/storage/' +post.image"
-                      alt="{{ post.title }}"
+                      :alt="post.title"
                       width="380"
                       height="auto"
                     />
@@ -26,7 +26,7 @@
                   <div v-else>
                      <img
                       src="https://i.gyazo.com/da1cfd20878c36a3a53d5b9b4caf36d9.png"
-                      alt="{{ post.title }}"
+                      :alt="post.title"
                       width="380"
                       height="auto"
                     />
@@ -90,6 +90,16 @@
                     </div>
                   </dl>
                 </div>
+
+                <router-link :to="'/post-update/' + post.id"
+                class="flex flex-1 items-center p-2 bg-indigo-200 hover:bg-purple-500 text-gray-800 hover:text-white transition-colors">
+                <svg class="inline-block w-5 h-5 stroke-current stroke-0 fill-gray mr-2" viewBox="0 0 20 20">
+                  <path
+                    d="M3.828 9l6.071-6.071-1.414-1.414-8.485 8.485 8.485 8.485 1.414-1.414-6.071-6.071h16.172v-2h-16.172z">
+                  </path>
+                </svg>
+                <span>More info</span>
+              </router-link>
               </div>
             </li>
           </ul>

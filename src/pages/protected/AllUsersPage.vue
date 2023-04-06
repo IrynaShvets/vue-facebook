@@ -14,16 +14,26 @@
             >
               <div class="overflow-hidden bg-white shadow sm:rounded-lg">
                 <div class="flex items-center px-4 py-5 sm:px-6">
-                  <img
-                    src="https://i.gyazo.com/50c000c0e4715eba3a2d778c01ac1c5c.png"
-                    alt="{{ user.name }}"
-                    width="70"
-                    height="auto"
-                  />
 
+                  <div v-if="user.image">
+                     <img
+                     class="w-[70px] h-[70px] rounded-[50%] align-middle border-slate-900 border-2"
+                      :src="user.image"
+                      :alt="user.title"
+                    />
+                  </div>
+
+                  <div v-else>
+                    <img
+                    class="w-[70px] h-[70px] rounded-[50%] align-middle"
+                    src="https://i.gyazo.com/50c000c0e4715eba3a2d778c01ac1c5c.png"
+                    :alt="user.name"
+                  />
+                  </div>
+                  
                   <div class="ml-10">
-                    <h3 class="font-medium text-gray-500">user name</h3>
-                    <h2 class="mt-1 text-gray-900">{{ user.name }}</h2>
+                    <h3 class="font-medium text-gray-500">{{ user.name }}</h3>
+                    <h2 class="mt-1 text-gray-900">{{ user.email }}</h2>
                   </div>
                 </div>
               </div>
@@ -84,6 +94,7 @@ export default {
 
   mounted() {
     this.getUsers();
+    console.log(this.getUsers())
   },
 };
 </script>

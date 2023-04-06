@@ -10,6 +10,8 @@ export const useAuthStore = defineStore("auth", {
     userEmail: "",
     userCreated: "",
 
+    post: null,
+
     posts: [],
     users: [],
 
@@ -25,6 +27,7 @@ export const useAuthStore = defineStore("auth", {
     authUserImage: (state) => state.userImage,
     authUserEmail: (state) => state.userEmail,
     authUserCreated: (state) => state.userCreated,
+
 
     allUsers: (state) => state.users,
     allPosts: (state) => state.posts,
@@ -83,13 +86,14 @@ export const useAuthStore = defineStore("auth", {
               return;
             }
             if (response.status === 200 && response.data.access_token) {
-              this.userData = response.data.user;
+              // this.userData = response.data.user;
               this.token = response.data.access_token;
               this.userName = response.data.user.name;
               this.userId = response.data.user.id;
               this.userImage = response.data.user.image;
               this.userEmail = response.data.user.email;
               this.userCreated = response.data.user.created_at;
+              
               resolve();
             }
           })
@@ -115,6 +119,7 @@ export const useAuthStore = defineStore("auth", {
             this.total = null;
             this.current_page = 1;
             this.per_page = 10;
+            this.post = null;
             resolve();
           })
           .catch((error) => {
@@ -167,11 +172,44 @@ export const useAuthStore = defineStore("auth", {
             }
           )
           .then((response) => {
+            if (!response.data) {
+              return;
+            }
+            
+            console.log("стор", response)
+            // this.token = response.data.access_token;
+            // this.userName = response.data.user.name;
+            // console.log(response);
+            this.post = response.data.post;
+            resolve();
+            
+          })
+          .catch((error) => {
+            reject(error.response);
+          });
+      });
+    },
+
+    updatePost(data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `http://localhost:80/api/post/${this.id}/update`,
+            {
+              ...data,
+            },
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${this.token}`,
+              },
+            }
+          )
+          .then((response) => {
             if (!response) {
               return;
             }
-            this.token = response.data.access_token;
-            this.userName = response.data.user.name;
+            
             console.log(response);
             resolve();
           })

@@ -6,12 +6,12 @@
         class="flex min-h-full items-center justify-center p-4 sm:px-6 lg:px-8"
       >
         <div class="w-full rounded">
-          <div v-if="success" class="text-dark">
-                <button type="button"></button>
-                <strong>{{success}}</strong>
+          <form @submit.prevent="handleSubmit" novalidate>
+            <div v-if="success" class="bg-white text-dark">
+              <button type="button"></button>
+              <strong>{{ success }}</strong>
             </div>
 
-          <form @submit.prevent="handleSubmit" novalidate>
             <div class="flex flex-col w-full">
               <img
                 class="mx-auto h-[100px] w-auto"
@@ -36,24 +36,6 @@
                 />
                 <span class="text-[#ff0012]" v-if="errors.title">
                   {{ errors.title.toString() }}
-                </span>
-                <span class="text-[#ff0012]" v-if="errorsStatus">
-                  {{ errorsStatus.toString() }}
-                </span>
-              </div>
-
-              <div class="flex flex-col gap-2 mb-4">
-                <label for="user_id" class="required">User</label>
-                <input
-                  id="user_id"
-                  name="user_id"
-                  type="text"
-                  class="form-input"
-                  required
-                  v-model="authUserId"
-                />
-                <span class="text-[#ff0012]" v-if="errors.user_id">
-                  {{ errors.user_id.toString() }}
                 </span>
                 <span class="text-[#ff0012]" v-if="errorsStatus">
                   {{ errorsStatus.toString() }}
@@ -125,19 +107,14 @@
                       @change="imagePreview($event)"
                     />
                   </label>
-                  <p class="pl-1">or drag and drop</p>
-
                   <!-- <div v-if="image">
                     <img v-bind:src="image" width="100" height="100"/>
                   </div> -->
-
                 </div>
                 <div v-if="image_file">
                   <img
                     :src="image_file"
-                    
                     class="inline-block h-10 w-10 rounded-full"
-                    
                     alt="Preview"
                   />
                 </div>
@@ -146,11 +123,11 @@
                 </p>
               </div>
               <span class="text-[#ff0012]" v-if="errors.image">
-                  {{ errors.image.toString() }}
-                </span>
-                <span class="text-[#ff0012]" v-if="errorsStatus">
-                  {{ errorsStatus.toString() }}
-                </span>
+                {{ errors.image.toString() }}
+              </span>
+              <span class="text-[#ff0012]" v-if="errorsStatus">
+                {{ errorsStatus.toString() }}
+              </span>
 
               <div class="border-t h-[1px] my-4"></div>
 
@@ -179,7 +156,7 @@
     <footer-app />
   </div>
 </template>
- <!-- @change="imagePreview($event)" -->
+ 
 <script>
 import ContainerApp from "../../shared/ContainerApp.vue";
 import { mapState, mapActions } from "pinia";
@@ -197,6 +174,7 @@ export default {
       description: "",
       body: "",
       image: "",
+      user_id: "",
       errors: {
         title: "",
         description: "",
@@ -204,9 +182,8 @@ export default {
         user_id: "",
         image: "",
       },
-      success: '',
+      success: "",
       errorsStatus: "",
-      // imagePreview: null,
       image_file: "",
     };
   },
@@ -235,15 +212,14 @@ export default {
         user_id: this.authUserId,
         image: this.image,
       };
+
       this.createPost(postData)
-        .then((response) => {
-         console.log(response)
+        .then(() => {
           // this.success = response.data.success;
           this.$router.push({ name: "posts" });
         })
         .catch((errors) => {
-          console.log(errors);
-          if (errors?.status) {
+
             switch (errors.status) {
             case 400:
               this.errors.title = errors.data.error.title;
@@ -276,13 +252,11 @@ export default {
               this.errors.user_id = errors.statusText;
               this.errors.image = errors.statusText;
               break;
-              
+
             default:
               this.errorsStatus = "Another validation error";
           }
-          }
-          
-        });
+      });
     },
   },
 };
