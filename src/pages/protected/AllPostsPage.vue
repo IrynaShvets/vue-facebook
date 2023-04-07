@@ -5,9 +5,9 @@
    
         <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
           <h1 class="text-gray-900">All posts</h1>
-          <ul v-if="userToken && allPosts">
+          <ul v-if="posts">
             <li
-              v-for="post in allPosts"
+              v-for="post in posts"
               :id="post.id"
               :key="post.id"
               class="mb-10"
@@ -122,8 +122,7 @@
   
 <script>
 
-import { mapActions, mapState } from "pinia";
-import { useAuthStore } from "../../store/auth";
+import { getPosts } from "../../services/post.service";
 // import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 
 export default {
@@ -133,31 +132,31 @@ export default {
   },
 
   data() {
-    return {      
+    return { 
+      posts: [],   
     };
   },
 
-  computed: {
-    ...mapState(useAuthStore, [
-      "userToken",
-      "allPosts",
-      // "currentPage",
-      // "perPage",
-      // "totalPosts",
-    ]),
-  },
 
   methods: {
-    ...mapActions(useAuthStore, ["getPosts"]),
+    // ...mapActions(useAuthStore, ["getPosts"]),
 
-    onPageClick(event) {
-      this.currentPage = event;
-      this.getPosts(this.currentPage);
+    getAllPosts() {
+      getPosts().then((response) => {
+        console.log(response)
+      }).catch((error) => {
+        console.log(error)
+      })
     },
+
+    // onPageClick(event) {
+    //   this.currentPage = event;
+    //   getPosts(this.currentPage);
+    // },
   },
 
   mounted() {
-    this.getPosts();
+    this.getAllPosts();
   },
 };
 </script>

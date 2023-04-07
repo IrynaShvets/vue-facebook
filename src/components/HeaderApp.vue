@@ -50,7 +50,7 @@
               </router-link>
             </li>
           </ul>
-<!-- 'http://localhost:80/storage/' + -->
+          <!-- 'http://localhost:80/storage/' + -->
           <div v-if="authUserImage" class="flex -space-x-1 overflow-hidden">
             <img
               class="inline-block h-10 w-10 rounded-full"
@@ -87,7 +87,10 @@
             <div class="absolute top-12 right-0" v-show="active">
               <div class="w-[200px] h-auto bg-white">
                 <div>
-                  <button @click="handleLogout" class="py-1 px-2 rounded bg-dark">
+                  <button
+                    @click="handleLogout"
+                    class="py-1 px-2 rounded bg-dark"
+                  >
                     Logout
                   </button>
                 </div>
@@ -123,7 +126,8 @@
 
 <script>
 import { useAuthStore } from "@/store/auth";
-import { mapActions, mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
+import { logout } from "../services/auth.service.js";
 
 export default {
   name: "HeaderApp",
@@ -139,17 +143,16 @@ export default {
   },
 
   methods: {
-    ...mapActions(useAuthStore, ["logout"]),
+    ...mapActions(useAuthStore, [ "deleteState"]),
 
     handleLogout() {
-      if (this.logout()) {
-        this.logout();
+      logout().then(() => {
+        this.deleteState();
         this.$router.push({ name: "login" });
         alert("You have successfully logged out of your account.");
-      }
+      });
     },
   },
-
 };
 </script>
 

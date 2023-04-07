@@ -14,11 +14,11 @@
             >
               <div class="overflow-hidden bg-white shadow sm:rounded-lg">
                 <div class="flex items-center px-4 py-5 sm:px-6">
-
+                 
                   <div v-if="user.image">
                      <img
                      class="w-[70px] h-[70px] rounded-[50%] align-middle border-slate-900 border-2"
-                      :src="user.image"
+                      :src="'http://localhost/storage/' +user.image"
                       :alt="user.title"
                     />
                   </div>
@@ -93,7 +93,18 @@ export default {
   },
 
   mounted() {
-    this.getUsers();
+    this.getUsers().then((response) => {
+      console.log(response)
+    }).catch((error) => {
+      if(error) {
+        this.$notify({
+          type: "error",
+          title: "error.data.message",
+        })
+      }
+      
+      console.log(error)
+    });
     console.log(this.getUsers())
   },
 };

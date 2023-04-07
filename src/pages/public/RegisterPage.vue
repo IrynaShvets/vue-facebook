@@ -36,9 +36,7 @@
                 <div v-if="image_file">
                   <img
                     :src="image_file"
-                    
                     class="inline-block h-10 w-10 rounded-full"
-                    
                     alt="Preview"
                   />
                 </div>
@@ -104,19 +102,6 @@
                 </span>
               </div>
 
-              <!-- <div class="flex flex-col gap-2">
-            <label for="confirm-password" class="required">Confirm password</label>
-            <input
-              id="confirm-password"
-              name="confirm-password"
-              type="password"
-              class="form-input"
-              required
-              v-model="confirmPassword"
-            />
-            
-          </div> -->
-
               <div class="border-t h-[1px] my-4"></div>
 
               <div class="text-sm mb-4">
@@ -156,6 +141,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
+import { register } from "../../services/auth.service.js";
 import ContainerApp from "../../shared/ContainerApp.vue";
 
 export default {
@@ -171,17 +157,13 @@ export default {
       email: "",
       password: "",
       image: "",
-      // confirmPassword: "",
-
       errors: {
         name: "",
         email: "",
         password: "",
         image: "",
-        // confirmPassword: "",
       },
       errorsStatus: [],
-
       image_file: "",
     };
   },
@@ -191,7 +173,13 @@ export default {
   },
 
   methods: {
-    ...mapActions(useAuthStore, ["getUser", "register"]),
+    ...mapActions(useAuthStore, [
+      "setToken",
+      "setUserName",
+      "setUserImage",
+      "setUserEmail",
+      "setUserId",
+    ]),
 
     imagePreview(e) {
       this.image = e.target.files[0];
@@ -209,28 +197,33 @@ export default {
         password: this.password,
         image: this.image,
       };
-      
-      this.register(userData)
-        .then(() => {
-          this.$router.push({ name: "home" });
+
+      register(userData)
+        .then((response) => {
+          if (response.access_token) {
+            this.setToken(response.access_token);
+            this.setUserName(response.user.name);
+            this.setUserEmail(response.user.email);
+            this.setUserImage(response.user.image);
+            this.setUserId(response.user.id);
+            this.$router.push({ name: "home" });
+          }
         })
         .catch((errors) => {
-          console.log(errors);
-          if (errors?.status) {
+          if (errors.status) {
             switch (errors.status) {
               case 400:
-                this.errors.name = errors.data.name;
-                this.errors.email = errors.data.email;
-                this.errors.password = errors.data.password;
-                this.errors.image = errors.data.image;
+                this.errors.name = errors.data.errors.name;
+                this.errors.email = errors.data.errors.email;
+                this.errors.password = errors.data.errors.password;
+                this.errors.image = errors.data.errors.image;
                 break;
 
               case 401:
-                this.errors.name = errors.data.name;
-                this.errors.email = errors.data.email;
-                this.errors.password = errors.data.password;
-                this.errors.image = errors.data.image;
-                // this.errors.confirmPassword = errors.data.password_confirmed;
+                this.errors.name = errors.data.errors.name;
+                this.errors.email = errors.data.errors.email;
+                this.errors.password = errors.data.errors.password;
+                this.errors.image = errors.data.errors.image;
                 break;
 
               case 422:
@@ -238,7 +231,6 @@ export default {
                 this.errors.email = errors.data.errors.email;
                 this.errors.password = errors.data.errors.password;
                 this.errors.image = errors.data.errors.image;
-                // this.errors.confirmPassword = errors.data.password_confirmed;
                 break;
 
               case 500:
@@ -246,7 +238,6 @@ export default {
                 this.errors.email = errors.statusText;
                 this.errors.password = errors.statusText;
                 this.errors.image = errors.statusText;
-                // this.errors.confirmPassword = errors.data.message;
                 break;
 
               default:

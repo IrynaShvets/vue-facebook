@@ -7,10 +7,10 @@
       >
         <div class="w-full rounded">
           <form @submit.prevent="handleSubmit" novalidate>
-            <div v-if="success" class="bg-white text-dark">
+            <!-- <div v-if="success" class="bg-white text-dark">
               <button type="button"></button>
               <strong>{{ success }}</strong>
-            </div>
+            </div> -->
 
             <div class="flex flex-col w-full">
               <img
@@ -174,12 +174,12 @@ export default {
       description: "",
       body: "",
       image: "",
-      user_id: "",
+      // user_id: "",
       errors: {
         title: "",
         description: "",
         body: "",
-        user_id: "",
+        // user_id: "",
         image: "",
       },
       success: "",
@@ -209,7 +209,7 @@ export default {
         title: this.title,
         description: this.description,
         body: this.body,
-        user_id: this.authUserId,
+        // user_id: this.authUserId,
         image: this.image,
       };
 
@@ -225,7 +225,7 @@ export default {
               this.errors.title = errors.data.error.title;
               this.errors.description = errors.data.error.description;
               this.errors.body = errors.data.error.body;
-              this.errors.user_id = errors.data.error.user_id;
+              // this.errors.user_id = errors.data.error.user_id;
               this.errors.image = errors.data.error.image;
               break;
 
@@ -233,7 +233,7 @@ export default {
               this.errors.title = errors.data.message;
               this.errors.description = errors.data.message;
               this.errors.body = errors.data.message;
-              this.errors.user_id = errors.data.message;
+              // this.errors.user_id = errors.data.message;
               this.errors.image = errors.data.message;
               break;
 
@@ -241,7 +241,7 @@ export default {
               this.errors.title = errors.data.errors.title;
               this.errors.description = errors.data.errors.description;
               this.errors.body = errors.data.errors.body;
-              this.errors.user_id = errors.data.errors.user_id;
+              // this.errors.user_id = errors.data.errors.user_id;
               this.errors.image = errors.data.errors.image;
               break;
 
@@ -249,7 +249,7 @@ export default {
               this.errors.title = errors.statusText;
               this.errors.description = errors.statusText;
               this.errors.body = errors.statusText;
-              this.errors.user_id = errors.statusText;
+              // this.errors.user_id = errors.statusText;
               this.errors.image = errors.statusText;
               break;
 

@@ -2,6 +2,7 @@ import { createApp, markRaw  } from 'vue';
 import App from './App.vue';
 import { createPinia } from 'pinia';
 import '@ocrv/vue-tailwind-pagination/styles';
+import Notifications from '@kyvg/vue3-notification';
 import './main.css';
 import HeaderApp from './components/HeaderApp.vue';
 import FooterApp from './components/FooterApp.vue';
@@ -23,4 +24,4 @@ app.component('header-app', HeaderApp);
 app.component('footer-app', FooterApp);
 app.component('sidebar-home', SidebarHome);
 
-app.use(pinia).use(router).mount('#app');
+app.use(Notifications).use(pinia).use(router).mount('#app');
