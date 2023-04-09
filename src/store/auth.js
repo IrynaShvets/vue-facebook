@@ -9,6 +9,7 @@ export const useAuthStore = defineStore("auth", {
     userId: "",
     userImage: null,
     userEmail: "",
+    userPassword: "",
     userCreated: "",
 
     postId: null,
@@ -21,9 +22,9 @@ export const useAuthStore = defineStore("auth", {
     posts: [],
     users: [],
 
-    total: null,
-    current_page: 1,
-    per_page: 10,
+    // total: null,
+    // current_page: 1,
+    // per_page: 10,
   }),
 
   getters: {
@@ -31,23 +32,18 @@ export const useAuthStore = defineStore("auth", {
     authUserId: (state) => state.userId,
     authUserImage: (state) => state.userImage,
     authUserEmail: (state) => state.userEmail,
+    authUserPassword: (state) => state.userPassword,
     authUserCreated: (state) => state.userCreated,
 
     getToken: (state) => state.token,
 
     allUsers: (state) => state.users,
     allPosts: (state) => state.posts,
-    totalPosts: (state) => state.total,
-    currentPage: (state) => state.current_page,
-    perPage: (state) => state.per_page,
 
-    getPostById: (state) => {
-      return (postId) => state.posts.find((post) => post.id === postId)
-    },
+    // totalPosts: (state) => state.total,
+    // currentPage: (state) => state.current_page,
+    // perPage: (state) => state.per_page,
 
-    getUserById: (state) => {
-      return (userId) => state.users.find((user) => user.id === userId)
-    },
   },
 
   actions: {
@@ -72,6 +68,10 @@ export const useAuthStore = defineStore("auth", {
       this.userEmail = userEmail;
     },
 
+    setUserPassword(userPassword) {
+      this.userPassword = userPassword;
+    },
+
     setUserCreated(userCreated) {
       this.userCreated = userCreated;
     },
@@ -82,12 +82,13 @@ export const useAuthStore = defineStore("auth", {
       this.userId = "";
       this.userImage = null;
       this.userEmail = "";
+      this.userPassword = "";
       this.userCreated = "";
       this.posts = [];
       this.users = [];
-      this.total = null;
-      this.current_page = 1;
-      this.per_page = 10;
+      // this.total = null;
+      // this.current_page = 1;
+      // this.per_page = 10;
       this.post = null;
     },
 
@@ -103,7 +104,7 @@ export const useAuthStore = defineStore("auth", {
             if (!response) {
               return;
             }
-            // console.log(response.data.data);
+            
             this.users = response.data.data;
             this.current_page = response.data.meta.current_page;
             this.per_page = response.data.meta.per_page;

@@ -1,30 +1,31 @@
 <template>
   <div>
     <header-app />
-    <section>
-      <h1 class="text-gray-900">Post</h1>
+    <section class="p-20">
+      <h1 class="text-gray-900 text-[40px]">Post</h1>
 
       <div>
-        <div class="px-4 py-5 sm:px-6">
-          <div v-if="image">
+        <div class="flex px-4 py-5 sm:px-6">
+          <div v-show="image">
             <img
-              class="w-[270px] h-[auto] align-middle border-yellow-500 border-2"
+              class="w-[570px] h-[auto] align-middle border-yellow-500 border-2"
               :src="image"
-              :alt="title"
+              alt="post"
             />
           </div>
 
           <div class="ml-10">
-            <h3 class="font-medium text-gray-500">{{ title }}</h3>
-            <h2 class="mt-1 text-gray-900">{{ description }}</h2>
-            <p class="mt-1 text-gray-900">{{ created_at }}</p>
-            <p class="mt-1 text-gray-900">{{ body }}</p>
+            <h3 class="font-medium text-[25px] text-gray-500">Title post: {{ title }}</h3>
+            <h2 class="mt-1 text-gray-900">Description post: {{ description }}</h2>
+            <p class="mt-1 text-gray-900">Post created: {{ created_at }}</p>
+            <p class="mt-1 text-gray-900">Text post: {{ body }}</p>
+            <p class="mt-1 text-gray-900">Author post: {{ userName }}</p>
           </div>
         </div>
 
       </div>
     </section>
-    <footer-app />
+    <footer-app class="fixed bottom-0 left-0 right-0" />
   </div>
 </template>
 
@@ -44,8 +45,7 @@ export default {
       body: "",
       image: "",
       created_at: "",
-      userId: "",
-
+      userName: "",
     };
   },
 
@@ -72,8 +72,8 @@ export default {
             this.body = response.data.data.body;
             this.image = response.data.data.image;
             this.created_at = response.data.data.created_at;
-            this.userId = response.data.data.user.id;
-            console.log(response.data.data.user)
+            this.userName = response.data.data.user.name;
+           
             resolve();
           })
           .catch((error) => {

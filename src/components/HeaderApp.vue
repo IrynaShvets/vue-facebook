@@ -99,8 +99,7 @@
                   <ul>
                     <li class="nav-item">
                       <router-link
-                      :to="{ name: 'userUpdate', params: { id: authUserId }}"
-                        
+                        :to="{ name: 'userUpdate', params: { id: authUserId } }"
                         class="mainPublic px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
                       >
                         Update profile
@@ -122,6 +121,17 @@
                         Login
                       </router-link>
                     </li>
+                    <li>
+                      <div>
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          @click="deleteUser(authUserId)"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -134,6 +144,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { useAuthStore } from "@/store/auth";
 import { mapState, mapActions } from "pinia";
 import { logout } from "../services/auth.service.js";
@@ -152,13 +163,34 @@ export default {
   },
 
   methods: {
-    ...mapActions(useAuthStore, [ "deleteState"]),
+    ...mapActions(useAuthStore, ["deleteState"]),
 
     handleLogout() {
       logout().then(() => {
         this.deleteState();
         this.$router.push({ name: "login" });
         alert("You have successfully logged out of your account.");
+      });
+    },
+
+    deleteUser() {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(`http://localhost:80/api/users/${this.$route.params.id}`, {
+            headers: {
+              Authorization: `Bearer ${this.getToken}`,
+            },
+          })
+          .then((response) => {
+            if (!response) {
+              return;
+            }
+            alert("Do you want to leave your account permanently?");
+            resolve();
+          })
+          .catch((error) => {
+            reject(error.response);
+          });
       });
     },
   },

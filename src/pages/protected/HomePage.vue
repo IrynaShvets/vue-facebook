@@ -7,7 +7,6 @@
     <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
       <h1>home</h1>
     </section>
-    <!-- <footer-app class="fixed bottom-0 left-0" /> -->
   </div>
 </template>
 

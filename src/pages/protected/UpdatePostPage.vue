@@ -104,7 +104,6 @@
                       @change="imagePreview($event)"
                     />
                   </label>
-                  <p class="pl-1">or drag and drop</p>
                 </div>
                 <div v-if="image_file">
                   <img

@@ -6,9 +6,23 @@
     />
 
     <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
+      <div>
+        <input
+          type="text"
+          name="searchQuery"
+          class="w-[500px] h-[42px] py-4 px-6 border-0 outline-0"
+          v-model="searchQuery"
+          placeholder="Search posts"
+        />
+      </div>
       <h1 class="text-gray-900">All posts</h1>
-      <ul v-if="allPosts">
-        <li v-for="post in allPosts" :id="post.id" :key="post.id" class="mb-10">
+      <ul v-if="searchedPosts">
+        <li
+          v-for="post in searchedPosts"
+          :id="post.id"
+          :key="post.id"
+          class="mb-10"
+        >
           <div class="overflow-hidden bg-white shadow sm:rounded-lg">
             <div class="flex items-center justify-center px-4 py-5 sm:px-6">
               <div v-if="post.image">
@@ -52,17 +66,9 @@
 
             <router-link
               :to="{ name: 'post', params: { id: post.id } }"
-              class="flex flex-1 items-center p-2 bg-indigo-200 hover:bg-purple-500 text-gray-800 hover:text-white transition-colors"
+              class="flex flex-1 items-center p-2 bg-indigo-200 hover:bg-indigo-500 text-gray-800 hover:text-white transition-colors"
             >
-              <svg
-                class="inline-block w-5 h-5 stroke-current stroke-0 fill-gray mr-2"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M3.828 9l6.071-6.071-1.414-1.414-8.485 8.485 8.485 8.485 1.414-1.414-6.071-6.071h16.172v-2h-16.172z"
-                ></path>
-              </svg>
-              <span>More info</span>
+              <span>More info about post</span>
             </router-link>
 
             <router-link
@@ -74,73 +80,65 @@
           </div>
         </li>
       </ul>
-
-      <!-- <div class="my-20">
-            <VueTailwindPagination
-              :current="currentPage"
-              :total="totalPosts"
-              :per-page="perPage"
-              @page-changed="onPageClick($event)"
-              text-before-input="Go to page"
-              text-after-input="Forward"
-            />
-          </div> -->
     </section>
-
-    <!-- <footer-app class="fixed bottom-0 left-0"/> -->
   </div>
 </template>
   
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
-
-// import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
+import axios from "axios";
 
 export default {
   name: "AllPostsPage",
-  components: {
-    // VueTailwindPagination,
-  },
+  components: {},
 
   data() {
-    return {};
+    return {
+      searchQuery: "",
+    };
   },
-
+ 
   computed: {
-    ...mapState(useAuthStore, [
-      "allPosts",
-      // "currentPage",
-      // "perPage",
-      // "totalPosts",
-    ]),
+    ...mapState(useAuthStore, ["userToken", "allPosts"]),
+
+    searchedPosts() {
+      return this.allPosts.filter(({ title }) =>
+        [title].some((val) => val.toLowerCase().includes(this.searchQuery))
+      );
+    },
   },
 
   methods: {
     ...mapActions(useAuthStore, ["getPosts"]),
 
-    // onPageClick(event) {
-    //   this.currentPage = event;
-    //   getPosts(this.currentPage);
-    // },
+    filterPosts() {
+      return new Promise((resolve, reject) => {
+        axios
+          .get("http://localhost:80/api/posts/filter", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          })
+          .then((response) => {
+            if (!response) {
+              return;
+            }
+
+            console.log(response);
+            resolve();
+          })
+          .catch((error) => {
+            reject(error.response);
+          });
+      });
+    },
   },
 
   mounted() {
-    this.getPosts()
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        if (error) {
-          this.$notify({
-            type: "error",
-            title: "error.data.message",
-          });
-        }
+    this.filterPosts();
 
-        console.log(error);
-      });
-    console.log(this.getPosts());
+    this.getPosts();
   },
 };
 </script>

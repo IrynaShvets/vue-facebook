@@ -1,8 +1,8 @@
 <template>
   <div>
     <header-app />
-    <section>
-      <div class="bg-gradient-to-r from-indigo-700 from-10% via-sky-700 via-30% to-emerald-700 to-90%">
+    <section class="bg-gradient-to-r from-indigo-700 from-10% via-sky-700 via-30% to-emerald-700 to-90%">
+      <div>
         <div class="flex items-center px-4 py-5 sm:px-6">
           <div v-if="image">
             <img
@@ -19,8 +19,9 @@
           </div>
         </div>
       </div>
+
     </section>
-    <footer-app class="fixed bottom-0 left-0 right-0"/>
+    <footer-app class="fixed bottom-0 left-0 right-0" />
   </div>
 </template>
 
@@ -34,7 +35,7 @@ export default {
 
   data() {
     return {
-    id: "",
+      id: "",
       email: "",
       name: "",
       image: "",
@@ -43,7 +44,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["posts", "token"]),
+    ...mapState(useAuthStore, ["getToken"]),
   },
 
   methods: {
@@ -52,7 +53,7 @@ export default {
         axios
           .get(`http://localhost:80/api/users/${this.$route.params.id}`, {
             headers: {
-              Authorization: `Bearer ${this.token}`,
+              Authorization: `Bearer ${this.getToken}`,
             },
           })
           .then((response) => {
@@ -64,7 +65,7 @@ export default {
             this.name = response.data.data.name;
             this.image = response.data.data.image;
             this.created_at = response.data.data.created_at;
-            // console.log(response.data.data)
+
             resolve();
           })
           .catch((error) => {
@@ -76,7 +77,8 @@ export default {
 
   mounted() {
     this.getUser();
-  }
+  },
+  
 };
 </script>
 
