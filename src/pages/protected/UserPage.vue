@@ -2,29 +2,25 @@
   <div>
     <header-app />
     <section>
-      <h1 class="text-gray-900">Post</h1>
-
-      <div>
-        <div class="px-4 py-5 sm:px-6">
+      <div class="bg-gradient-to-r from-indigo-700 from-10% via-sky-700 via-30% to-emerald-700 to-90%">
+        <div class="flex items-center px-4 py-5 sm:px-6">
           <div v-if="image">
             <img
-              class="w-[270px] h-[auto] align-middle border-yellow-500 border-2"
+              class="w-[270px] h-[270px] rounded-[100%] align-middle border-red-900 border-2"
               :src="image"
-              :alt="title"
+              :alt="name"
             />
           </div>
 
           <div class="ml-10">
-            <h3 class="font-medium text-gray-500">{{ title }}</h3>
-            <h2 class="mt-1 text-gray-900">{{ description }}</h2>
-            <p class="mt-1 text-gray-900">{{ created_at }}</p>
-            <p class="mt-1 text-gray-900">{{ body }}</p>
+            <h3 class="text-[34px] text-gray-900">{{ name }}</h3>
+            <h2 class="text-[24px] mt-1 text-gray-900">{{ email }}</h2>
+            <p class="text-[24px] mt-1 text-gray-900">{{ created_at }}</p>
           </div>
         </div>
-
       </div>
     </section>
-    <footer-app />
+    <footer-app class="fixed bottom-0 left-0 right-0"/>
   </div>
 </template>
 
@@ -34,18 +30,15 @@ import { useAuthStore } from "../../store/auth";
 import axios from "axios";
 
 export default {
-  name: "PostPage",
+  name: "UserPage",
 
   data() {
     return {
-      id: "",
-      title: "",
-      description: "",
-      body: "",
+    id: "",
+      email: "",
+      name: "",
       image: "",
       created_at: "",
-      userId: "",
-
     };
   },
 
@@ -54,10 +47,10 @@ export default {
   },
 
   methods: {
-    getPost() {
+    getUser() {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:80/api/post/${this.$route.params.id}/show`, {
+          .get(`http://localhost:80/api/users/${this.$route.params.id}`, {
             headers: {
               Authorization: `Bearer ${this.token}`,
             },
@@ -67,13 +60,11 @@ export default {
               return;
             }
             this.id = response.data.data.id;
-            this.title = response.data.data.title;
-            this.description = response.data.data.description;
-            this.body = response.data.data.body;
+            this.email = response.data.data.email;
+            this.name = response.data.data.name;
             this.image = response.data.data.image;
             this.created_at = response.data.data.created_at;
-            this.userId = response.data.data.user.id;
-            console.log(response.data.data.user)
+            // console.log(response.data.data)
             resolve();
           })
           .catch((error) => {
@@ -84,7 +75,7 @@ export default {
   },
 
   mounted() {
-    this.getPost();
+    this.getUser();
   }
 };
 </script>

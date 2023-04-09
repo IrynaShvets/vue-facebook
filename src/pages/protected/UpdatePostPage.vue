@@ -6,11 +6,7 @@
         class="flex min-h-full items-center justify-center p-4 sm:px-6 lg:px-8"
       >
         <div class="w-full rounded">
-          <div v-if="success" class="text-dark">
-                <button type="button"></button>
-                <strong>{{success}}</strong>
-            </div>
-
+        
           <form @submit.prevent="handleSubmit" novalidate>
             <div class="flex flex-col w-full">
               <img
@@ -33,6 +29,7 @@
                   class="form-input"
                   required
                   v-model="title"
+                 
                 />
                 <span class="text-[#ff0012]" v-if="errors.title">
                   {{ errors.title.toString() }}
@@ -41,8 +38,6 @@
                   {{ errorsStatus.toString() }}
                 </span>
               </div>
-
-              <input type="hidden" id="user_id" name="user_id" v-model="authUserId">
 
               <div class="flex flex-col gap-2 mb-4">
                 <label for="description" class="required">Description</label>
@@ -93,7 +88,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-                <div class="mt-4 flex text-sm leading-6 text-gray-600">
+                <div class="mt-4 flex items-center justify-center text-sm leading-6 text-gray-600">
                   <label
                     for="image"
                     class="relative cursor-pointer rounded-md bg-indigo-600 font-semibold text-white focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
@@ -110,18 +105,11 @@
                     />
                   </label>
                   <p class="pl-1">or drag and drop</p>
-
-                  <!-- <div v-if="image">
-                    <img v-bind:src="image" width="100" height="100"/>
-                  </div> -->
-
                 </div>
                 <div v-if="image_file">
                   <img
                     :src="image_file"
-                    
                     class="inline-block h-10 w-10 rounded-full"
-                    
                     alt="Preview"
                   />
                 </div>
@@ -217,13 +205,12 @@ export default {
         title: this.title,
         description: this.description,
         body: this.body,
-        user_id: this.authUserId,
         image: this.image,
       };
       this.updatePost(postData)
         .then((response) => {
          console.log(response)
-          // this.success = response.data.success;
+       
           this.$router.push({ name: "posts" });
         })
         .catch((errors) => {
@@ -234,7 +221,6 @@ export default {
               this.errors.title = errors.data.error.title;
               this.errors.description = errors.data.error.description;
               this.errors.body = errors.data.error.body;
-              this.errors.user_id = errors.data.error.user_id;
               this.errors.image = errors.data.error.image;
               break;
 
@@ -242,7 +228,6 @@ export default {
               this.errors.title = errors.data.message;
               this.errors.description = errors.data.message;
               this.errors.body = errors.data.message;
-              this.errors.user_id = errors.data.message;
               this.errors.image = errors.data.message;
               break;
 
@@ -250,7 +235,6 @@ export default {
               this.errors.title = errors.data.errors.title;
               this.errors.description = errors.data.errors.description;
               this.errors.body = errors.data.errors.body;
-              this.errors.user_id = errors.data.errors.user_id;
               this.errors.image = errors.data.errors.image;
               break;
 
@@ -258,7 +242,6 @@ export default {
               this.errors.title = errors.statusText;
               this.errors.description = errors.statusText;
               this.errors.body = errors.statusText;
-              this.errors.user_id = errors.statusText;
               this.errors.image = errors.statusText;
               break;
               
@@ -269,6 +252,15 @@ export default {
           
         });
     },
+  },
+
+  watch: {
+    someObject: {
+      handler(newValue, oldValue) {
+        console.log(newValue, oldValue)
+      },
+      deep: true
+    }
   },
 };
 </script>

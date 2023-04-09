@@ -1,5 +1,5 @@
 import HomePage from "./pages/protected/HomePage.vue";
-import AllUsersPage from "./pages/protected/AllUsersPage.vue";
+import LoginPage from "./pages/public/LoginPage.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import {useAuthStore} from "./store/auth"
 
@@ -17,22 +17,33 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("@/pages/public/LoginPage.vue"),
+    component: LoginPage,
   },
   {
-    path: "/own-posts",
-    name: "ownPosts",
-    component: () => import("@/pages/protected/PostPage.vue"),
+    path: "/users",
+    name: "users",
+    component: () => import("@/pages/protected/AllUsersPage.vue"),
+  },
+  {
+    path: "/user/:id",
+    name: "user",
+    component: () => import("@/pages/protected/UserPage.vue"),
+  },
+  {
+    path: "/user-update/:id",
+    name: "userUpdate",
+    component: () => import("@/pages/protected/UpdateUserPage.vue"),
   },
   {
     path: "/posts",
     name: "posts",
     component: () => import("@/pages/protected/AllPostsPage.vue"),
   },
+  
   {
-    path: "/users",
-    name: "users",
-    component: AllUsersPage,
+    path: "/post/:id",
+    name: "post",
+    component: () => import("@/pages/protected/PostPage.vue"),
   },
   {
     path: "/posts-create",
@@ -43,11 +54,6 @@ const routes = [
     path: "/post-update/:id",
     name: "postUpdate",
     component: () => import("@/pages/protected/UpdatePostPage.vue"),
-  },
-  {
-    path: "/avatar",
-    name: "avatar",
-    component: () => import("@/pages/protected/AvatarPage.vue"),
   },
   { 
     path: '/:pathMatch(.*)*', 

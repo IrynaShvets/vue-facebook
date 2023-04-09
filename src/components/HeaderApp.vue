@@ -99,6 +99,15 @@
                   <ul>
                     <li class="nav-item">
                       <router-link
+                      :to="{ name: 'userUpdate', params: { id: authUserId }}"
+                        
+                        class="mainPublic px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
+                      >
+                        Update profile
+                      </router-link>
+                    </li>
+                    <li class="nav-item">
+                      <router-link
                         to="/register"
                         class="mainPublic px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
                       >
@@ -139,7 +148,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["authUserName", "authUserImage"]),
+    ...mapState(useAuthStore, ["authUserName", "authUserImage", "authUserId"]),
   },
 
   methods: {

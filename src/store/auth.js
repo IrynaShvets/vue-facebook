@@ -10,9 +10,17 @@ export const useAuthStore = defineStore("auth", {
     userImage: null,
     userEmail: "",
     userCreated: "",
+
+    postId: null,
+    postTitle: null,
+    postDescription: null,
+    postImage: null,
+    postBody: null,
+
     post: null,
     posts: [],
     users: [],
+
     total: null,
     current_page: 1,
     per_page: 10,
@@ -25,6 +33,8 @@ export const useAuthStore = defineStore("auth", {
     authUserEmail: (state) => state.userEmail,
     authUserCreated: (state) => state.userCreated,
 
+    getToken: (state) => state.token,
+
     allUsers: (state) => state.users,
     allPosts: (state) => state.posts,
     totalPosts: (state) => state.total,
@@ -34,9 +44,14 @@ export const useAuthStore = defineStore("auth", {
     getPostById: (state) => {
       return (postId) => state.posts.find((post) => post.id === postId)
     },
+
+    getUserById: (state) => {
+      return (userId) => state.users.find((user) => user.id === userId)
+    },
   },
 
   actions: {
+
     setToken(token) {
       this.token = token;
     },
@@ -76,33 +91,52 @@ export const useAuthStore = defineStore("auth", {
       this.post = null;
     },
 
-    // getPosts() {
-    //   return new Promise((resolve, reject) => {
-    //     axios
-    //       .get("http://localhost:80/api/post/all", {
-    //         headers: {
-    //           Authorization: `Bearer ${this.token}`,
-    //         },
-    //       })
-    //       .then((response) => {
-    //         if (!response) {
-    //           return;
-    //         }
-    //         console.log(response.data.data);
-    //         // this.token = response.data.access_token;
-    //         // this.userName = response.data.user.name;
-    //         this.posts = response.data.data;
-            
-    //         // this.current_page = response.data.meta.current_page;
-    //         // this.per_page = response.data.meta.per_page;
-    //         // this.total = response.data.meta.total;
-    //         resolve();
-    //       })
-    //       .catch((error) => {
-    //         reject(error.response);
-    //       });
-    //   });
-    // },
+    getUsers() {
+      return new Promise((resolve, reject) => {
+        axios
+          .get("http://localhost:80/api/users", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          })
+          .then((response) => {
+            if (!response) {
+              return;
+            }
+            // console.log(response.data.data);
+            this.users = response.data.data;
+            this.current_page = response.data.meta.current_page;
+            this.per_page = response.data.meta.per_page;
+            this.total = response.data.meta.total;
+            resolve();
+          })
+          .catch((error) => {
+            reject(error.response);
+          });
+      });
+    },
+
+
+    getPosts() {
+      return new Promise((resolve, reject) => {
+        axios
+          .get("http://localhost:80/api/post/all", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          })
+          .then((response) => {
+            if (!response) {
+              return;
+            }
+            this.posts = response.data.data;
+            resolve();
+          })
+          .catch((error) => {
+            reject(error.response);
+          });
+      });
+    },
 
     createPost(data) {
       return new Promise((resolve, reject) => {
@@ -123,11 +157,6 @@ export const useAuthStore = defineStore("auth", {
             if (!response.data) {
               return;
             }
-            
-            console.log("стор", response)
-            // this.token = response.data.access_token;
-            // this.userName = response.data.user.name;
-            // console.log(response);
             this.post = response.data.post;
             resolve();
             
@@ -142,7 +171,7 @@ export const useAuthStore = defineStore("auth", {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://localhost:80/api/post/${this.getPostById()}/update`,
+            `http://localhost:80/api/post/${this.getPostById}/update`,
             {
               ...data,
             },
@@ -167,30 +196,7 @@ export const useAuthStore = defineStore("auth", {
       });
     },
 
-    getUsers() {
-      return new Promise((resolve, reject) => {
-        axios
-          .get("http://localhost:80/api/users", {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          })
-          .then((response) => {
-            if (!response) {
-              return;
-            }
-            console.log(response.data.data);
-            this.users = response.data.data;
-            this.current_page = response.data.meta.current_page;
-            this.per_page = response.data.meta.per_page;
-            this.total = response.data.meta.total;
-            resolve();
-          })
-          .catch((error) => {
-            reject(error.response);
-          });
-      });
-    },
+    
   },
   persist: true,
 });

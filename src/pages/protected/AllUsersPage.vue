@@ -5,7 +5,7 @@
     
         <section class="absolute overflow-y-auto top-[80px] right-[20%]">
           <h1 class="text-gray-900">All Users</h1>
-          <ul v-if="userToken && allUsers">
+          <ul v-if="allUsers">
             <li
               v-for="user in allUsers"
               :id="user.id"
@@ -18,8 +18,8 @@
                   <div v-if="user.image">
                      <img
                      class="w-[70px] h-[70px] rounded-[50%] align-middle border-slate-900 border-2"
-                      :src="'http://localhost/storage/' +user.image"
-                      :alt="user.title"
+                      :src="user.image"
+                      :alt="user.name"
                     />
                   </div>
 
@@ -36,6 +36,17 @@
                     <h2 class="mt-1 text-gray-900">{{ user.email }}</h2>
                   </div>
                 </div>
+                
+                <router-link :to="{ name: 'user', params: { id: user.id }}"
+                class="flex flex-1 items-center p-2 bg-indigo-200 hover:bg-purple-500 text-gray-800 hover:text-white transition-colors">
+                <svg class="inline-block w-5 h-5 stroke-current stroke-0 fill-gray mr-2" viewBox="0 0 20 20">
+                  <path
+                    d="M3.828 9l6.071-6.071-1.414-1.414-8.485 8.485 8.485 8.485 1.414-1.414-6.071-6.071h16.172v-2h-16.172z">
+                  </path>
+                </svg>
+                <span>More info</span>
+              </router-link>
+
               </div>
             </li>
           </ul>
@@ -52,11 +63,11 @@
           </div>
         </section>
       
-    <footer-app class="fixed bottom-0 left-0"/>
+    <!-- <footer-app class="fixed bottom-0 left-0"/> -->
   </div>
 </template>
   
-  <script>
+<script>
 // import ContainerApp from "../../shared/ContainerApp.vue";
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
@@ -93,19 +104,7 @@ export default {
   },
 
   mounted() {
-    this.getUsers().then((response) => {
-      console.log(response)
-    }).catch((error) => {
-      if(error) {
-        this.$notify({
-          type: "error",
-          title: "error.data.message",
-        })
-      }
-      
-      console.log(error)
-    });
-    console.log(this.getUsers())
+    this.getUsers();
   },
 };
 </script>
