@@ -9,6 +9,24 @@ import FooterApp from './components/FooterApp.vue';
 import SidebarHome from "./components/SidebarHome.vue";
 import router from "./router";
 
+
+// import Echo from 'laravel-echo';
+// import Pusher from 'pusher-js';
+ 
+// const options = {
+//     broadcaster: 'pusher',
+//     key: "4fdebec08f17a3953510"
+// }
+ 
+// window.Echo = new Echo({
+//     ...options,
+//     client: new Pusher(options.key, options)
+// });
+
+
+
+
+
 const app = createApp(App);
 const pinia = createPinia();
 
