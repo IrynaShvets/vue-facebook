@@ -7,17 +7,21 @@
 
     <section class="absolute overflow-y-auto top-[80px] right-[20%]">
       <div>
-        <input
+        <form @click.prevent="getUsersList">
+          <input
           type="text"
           name="searchQuery"
           class="w-[500px] h-[42px] py-4 px-6 border-0 outline-0"
           v-model="searchQuery"
           placeholder="Search users"
         />
+
+        <button type="submit">Search</button>
+        </form>
       </div>
       <h1 class="text-gray-900">All Users</h1>
-      <ul v-if="searchedUsers">
-        <li v-for="user in searchedUsers" :id="user.id" :key="user.id" class="mb-10">
+      <ul v-if="users">
+        <li v-for="user in users" :id="user.id" :key="user.id" class="mb-10">
           <div class="overflow-hidden bg-white shadow sm:rounded-lg">
             <div class="flex items-center px-4 py-5 sm:px-6">
               <div v-if="user.image">
@@ -51,44 +55,72 @@
           </div>
         </li>
       </ul>
+
+      <div class="my-20">
+            <VueTailwindPagination
+              v-if="pagination"
+              :current="pagination.current_page"
+              :total="pagination.total"
+              :per-page="pagination.per_page"
+              @page-changed="onPageClick($event)"
+              text-before-input="Go to page"
+              text-after-input="Forward"
+            />
+          </div>
     </section>
   </div>
 </template>
   
 <script>
+import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
 
 export default {
   name: "AllUsersPage",
   components: {
-    
+    VueTailwindPagination,
   },
 
   data() {
     return {
       searchQuery: "",
+      users:  null,
+      pagination: null,
+      currentPage: 1,
     };
   },
 
   computed: {
     ...mapState(useAuthStore, [
       "userToken",
-      "allUsers",
+      // "allUsers",
       // "currentPage",
       // "perPage",
       // "totalPosts",
     ]),
 
-    searchedUsers() {
-      return this.allUsers.filter(({ name }) =>
-        [name].some((val) => val.toLowerCase().includes(this.searchQuery))
-      );
-    },
+    // searchedUsers() {
+    //   return this.allUsers.filter(({ name }) =>
+    //     [name].some((val) => val.toLowerCase().includes(this.searchQuery))
+    //   );
+    // },
   },
 
   methods: {
     ...mapActions(useAuthStore, ["getUsers"]),
+
+    onPageClick(event) {
+      this.currentPage = event;
+      this.getUsersList();
+    },
+
+    getUsersList() {
+      this.getUsers(this.currentPage, {name: this.searchQuery}).then((response) => {
+        this.users = response.data;
+        this.pagination = response.meta;
+      });
+    }
   },
 
   mounted() {

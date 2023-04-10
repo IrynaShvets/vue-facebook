@@ -84,7 +84,7 @@ export const useAuthStore = defineStore("auth", {
       this.userEmail = "";
       this.userPassword = "";
       this.userCreated = "";
-      this.posts = [];
+      // this.posts = [];
       this.users = [];
       this.total = null;
       this.current_page = 1;
@@ -92,24 +92,53 @@ export const useAuthStore = defineStore("auth", {
       this.post = null;
     },
 
-    getUsers() {
+    // getUsers() {
+    //   return new Promise((resolve, reject) => {
+    //     axios
+    //       .get("http://localhost:80/api/users", {
+    //         headers: {
+    //           Authorization: `Bearer ${this.token}`,
+    //         },
+    //       })
+    //       .then((response) => {
+    //         if (!response) {
+    //           return;
+    //         }
+            
+    //         this.users = response.data.data;
+    //         this.current_page = response.data.meta.current_page;
+    //         this.per_page = response.data.meta.per_page;
+    //         this.total = response.data.meta.total;
+    //         resolve();
+    //       })
+    //       .catch((error) => {
+    //         reject(error.response);
+    //       });
+    //   });
+    // },
+
+    getUsers(page = 1, filters = {}) {
       return new Promise((resolve, reject) => {
         axios
           .get("http://localhost:80/api/users", {
+            params: {
+              page: page,
+              ...filters
+            },
             headers: {
               Authorization: `Bearer ${this.token}`,
             },
           })
           .then((response) => {
             if (!response) {
-              return;
+              reject();
             }
             
-            this.users = response.data.data;
-            this.current_page = response.data.meta.current_page;
-            this.per_page = response.data.meta.per_page;
-            this.total = response.data.meta.total;
-            resolve();
+            // this.users = response.data.data;
+            // this.current_page = response.data.meta.current_page;
+            // this.per_page = response.data.meta.per_page;
+            // this.total = response.data.meta.total;
+            resolve(response.data);
           })
           .catch((error) => {
             reject(error.response);
@@ -117,24 +146,27 @@ export const useAuthStore = defineStore("auth", {
       });
     },
 
-
-    getPosts() {
+    getPosts(page = 1, filters = {}) {
       return new Promise((resolve, reject) => {
         axios
           .get("http://localhost:80/api/post/all", {
+            params: {
+              page: page,
+              ...filters
+            },
             headers: {
               Authorization: `Bearer ${this.token}`,
             },
           })
           .then((response) => {
             if (!response) {
-              return;
+              reject();
             }
-            this.posts = response.data.data;
-            this.current_page = response.data.meta.current_page;
-            this.per_page = response.data.meta.per_page;
-            this.total = response.data.meta.total;
-            resolve();
+            // this.posts = response.data.data;
+            // this.current_page = response.data.meta.current_page;
+            // this.per_page = response.data.meta.per_page;
+            // this.total = response.data.meta.total;
+            resolve(response.data);
           })
           .catch((error) => {
             reject(error.response);

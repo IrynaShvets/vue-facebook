@@ -7,18 +7,23 @@
 
     <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
       <div>
-        <input
+        <form @click.prevent="getPostsList">
+          <input
           type="text"
           name="searchQuery"
           class="w-[500px] h-[42px] py-4 px-6 border-0 outline-0"
           v-model="searchQuery"
           placeholder="Search posts"
         />
+
+        <button type="submit">Search</button>
+        </form>
+        
       </div>
       <h1 class="text-gray-900">All posts</h1>
-      <ul v-if="searchedPosts">
+      <ul v-if="posts">
         <li
-          v-for="post in searchedPosts"
+          v-for="post in posts"
           :id="post.id"
           :key="post.id"
           class="mb-10"
@@ -83,9 +88,10 @@
 
       <div class="my-20">
             <VueTailwindPagination
-              :current="currentPage"
-              :total="totalPosts"
-              :per-page="perPage"
+              v-if="pagination"
+              :current="pagination.current_page"
+              :total="pagination.total"
+              :per-page="pagination.per_page"
               @page-changed="onPageClick($event)"
               text-before-input="Go to page"
               text-after-input="Forward"
@@ -99,7 +105,6 @@
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
-// import axios from "axios";
 
 export default {
   name: "AllPostsPage",
@@ -110,17 +115,14 @@ export default {
   data() {
     return {
       searchQuery: "",
+      posts:  null,
+      pagination: null,
+      currentPage: 1,
     };
   },
  
   computed: {
-    ...mapState(useAuthStore, ["userToken", "allPosts", "currentPage", "perPage", "totalPosts",]),
-
-    searchedPosts() {
-      return this.allPosts.filter(({ title }) =>
-        [title].some((val) => val.toLowerCase().includes(this.searchQuery))
-      );
-    },
+    ...mapState(useAuthStore, ["userToken"]),
   },
 
   methods: {
@@ -128,13 +130,21 @@ export default {
 
     onPageClick(event) {
       this.currentPage = event;
-      this.getPosts(this.currentPage);
+      this.getPostsList();
     },
+
+    getPostsList() {
+      this.getPosts(this.currentPage, {title: this.searchQuery}).then((response) => {
+        this.posts = response.data;
+        this.pagination = response.meta;
+      });
+    }
   },
 
   mounted() {
-    this.getPosts();
+    this.getPostsList();
   },
+
 };
 </script>
   
