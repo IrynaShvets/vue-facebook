@@ -22,9 +22,9 @@ export const useAuthStore = defineStore("auth", {
     posts: [],
     users: [],
 
-    // total: null,
-    // current_page: 1,
-    // per_page: 10,
+    total: null,
+    current_page: 1,
+    per_page: 10,
   }),
 
   getters: {
@@ -40,9 +40,9 @@ export const useAuthStore = defineStore("auth", {
     allUsers: (state) => state.users,
     allPosts: (state) => state.posts,
 
-    // totalPosts: (state) => state.total,
-    // currentPage: (state) => state.current_page,
-    // perPage: (state) => state.per_page,
+    totalPosts: (state) => state.total,
+    currentPage: (state) => state.current_page,
+    perPage: (state) => state.per_page,
 
   },
 
@@ -86,9 +86,9 @@ export const useAuthStore = defineStore("auth", {
       this.userCreated = "";
       this.posts = [];
       this.users = [];
-      // this.total = null;
-      // this.current_page = 1;
-      // this.per_page = 10;
+      this.total = null;
+      this.current_page = 1;
+      this.per_page = 10;
       this.post = null;
     },
 
@@ -131,6 +131,9 @@ export const useAuthStore = defineStore("auth", {
               return;
             }
             this.posts = response.data.data;
+            this.current_page = response.data.meta.current_page;
+            this.per_page = response.data.meta.per_page;
+            this.total = response.data.meta.total;
             resolve();
           })
           .catch((error) => {

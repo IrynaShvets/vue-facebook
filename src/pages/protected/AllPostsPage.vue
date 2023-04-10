@@ -80,18 +80,32 @@
           </div>
         </li>
       </ul>
+
+      <div class="my-20">
+            <VueTailwindPagination
+              :current="currentPage"
+              :total="totalPosts"
+              :per-page="perPage"
+              @page-changed="onPageClick($event)"
+              text-before-input="Go to page"
+              text-after-input="Forward"
+            />
+          </div>
     </section>
   </div>
 </template>
   
 <script>
+import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "AllPostsPage",
-  components: {},
+  components: {
+    VueTailwindPagination,
+  },
 
   data() {
     return {
@@ -100,7 +114,7 @@ export default {
   },
  
   computed: {
-    ...mapState(useAuthStore, ["userToken", "allPosts"]),
+    ...mapState(useAuthStore, ["userToken", "allPosts", "currentPage", "perPage", "totalPosts",]),
 
     searchedPosts() {
       return this.allPosts.filter(({ title }) =>
@@ -112,32 +126,13 @@ export default {
   methods: {
     ...mapActions(useAuthStore, ["getPosts"]),
 
-    filterPosts() {
-      return new Promise((resolve, reject) => {
-        axios
-          .get("http://localhost:80/api/posts/filter", {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          })
-          .then((response) => {
-            if (!response) {
-              return;
-            }
-
-            console.log(response);
-            resolve();
-          })
-          .catch((error) => {
-            reject(error.response);
-          });
-      });
+    onPageClick(event) {
+      this.currentPage = event;
+      this.getPosts(this.currentPage);
     },
   },
 
   mounted() {
-    this.filterPosts();
-
     this.getPosts();
   },
 };
