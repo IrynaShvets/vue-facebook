@@ -1,19 +1,15 @@
 <template>
   <header class="flex flex-wrap bg-[#001524]">
     <div class="flex items-center justify-between w-full px-10">
-      <div class="h-12 w-18">
-        <img
-          class="h-12 w-18"
-          src="https://i.gyazo.com/93114b7cff56d5426ec1f3549083e16d.png"
-          alt="logo"
-        />
-      </div>
-
       <nav class="relative flex items-center justify-center">
-        <div
-          v-if="authUserName"
-          class="container px-4 mx-auto flex flex-wrap items-center justify-between"
-        >
+        <div v-if="authUserName" class="flex items-center justify-center">
+          <div class="h-12 w-18">
+            <img
+              class="h-12 w-18"
+              src="https://i.gyazo.com/93114b7cff56d5426ec1f3549083e16d.png"
+              alt="logo"
+            />
+          </div>
           <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
             <li class="nav-item">
               <router-link
@@ -28,6 +24,23 @@
                 >
                   <path
                     d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"
+                  ></path>
+                </svg>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/chat"
+                active-class="active-link"
+                exact-active-class="exact-active-link"
+                class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+              >
+                <svg
+                  class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 15l-4 4v-4h-4c-1.105 0-2-0.895-2-2v0-10c0-1.1 0.9-2 2-2h16c1.105 0 2 0.895 2 2v0 10c0 1.105-0.895 2-2 2v0h-8zM5 7v2h2v-2h-2zM9 7v2h2v-2h-2zM13 7v2h2v-2h-2z"
                   ></path>
                 </svg>
               </router-link>
@@ -50,89 +63,93 @@
               </router-link>
             </li>
           </ul>
-          <!-- 'http://localhost:80/storage/' + -->
-          <div v-if="authUserImage" class="flex -space-x-1 overflow-hidden">
-            <img
-              class="inline-block h-10 w-10 rounded-full"
-              :src="authUserImage"
-              alt=""
-            />
-          </div>
+          <div class="flex items-center">
+            <div v-if="authUserImage" class="flex -space-x-1 overflow-hidden">
+              <img
+                class="inline-block h-10 w-10 rounded-full"
+                :src="authUserImage"
+                alt=""
+              />
+            </div>
 
-          <div v-else class="flex -space-x-1 overflow-hidden">
-            <img
-              class="inline-block h-10 w-10 rounded-full"
-              src="https://i.gyazo.com/50c000c0e4715eba3a2d778c01ac1c5c.png"
-              alt=""
-            />
-          </div>
+            <div v-else class="flex -space-x-1 overflow-hidden">
+              <img
+                class="inline-block h-10 w-10 rounded-full"
+                src="https://i.gyazo.com/50c000c0e4715eba3a2d778c01ac1c5c.png"
+                alt=""
+              />
+            </div>
 
-          <div v-if="authUserName">
-            <span class="text-white">{{ authUserName }}</span>
-          </div>
+            <div v-if="authUserName">
+              <span class="text-white">{{ authUserName }}</span>
+            </div>
 
-          <div class="flex flex-col relative">
-            <button class="py-1 px-4" @click="active = !active">
-              <svg
-                class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
-                viewBox="0 0 44 32"
-              >
-                <path
-                  d="M0 6h28v6h-28v-6zM0 14h28v6h-28v-6zM0 22h28v6h-28v-6z"
-                ></path>
-                <path d="M31 14l6 6 6-6z"></path>
-              </svg>
-            </button>
+            <div class="flex flex-col relative">
+              <button class="py-1 px-4" @click="active = !active">
+                <svg
+                  class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
+                  viewBox="0 0 44 32"
+                >
+                  <path
+                    d="M0 6h28v6h-28v-6zM0 14h28v6h-28v-6zM0 22h28v6h-28v-6z"
+                  ></path>
+                  <path d="M31 14l6 6 6-6z"></path>
+                </svg>
+              </button>
 
-            <div class="absolute top-12 right-0" v-show="active">
-              <div class="w-[200px] h-auto bg-white">
-                <div>
-                  <button
-                    @click="handleLogout"
-                    class="py-1 px-2 rounded bg-dark"
-                  >
-                    Logout
-                  </button>
-                </div>
+              <div class="absolute top-12 right-0" v-show="active">
+                <div class="w-[200px] h-auto bg-white">
+                  <div>
+                    <button
+                      @click="handleLogout"
+                      class="py-1 px-2 rounded bg-dark"
+                    >
+                      Logout
+                    </button>
+                  </div>
 
-                <div else>
-                  <ul>
-                    <li class="nav-item">
-                      <router-link
-                        :to="{ name: 'userUpdate', params: { id: authUserId } }"
-                        class="mainPublic px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
-                      >
-                        Update profile
-                      </router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link
-                        to="/register"
-                        class="mainPublic px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
-                      >
-                        Register
-                      </router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link
-                        to="/login"
-                        class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
-                      >
-                        Login
-                      </router-link>
-                    </li>
-                    <li>
-                      <div>
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          @click="deleteUser(authUserId)"
+                  <div else>
+                    <ul>
+                      <li class="nav-item">
+                        <router-link
+                          :to="{
+                            name: 'userUpdate',
+                            params: { id: authUserId },
+                          }"
+                          class="mainPublic px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
                         >
-                          Delete
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
+                          Update profile
+                        </router-link>
+                      </li>
+                      <li class="nav-item">
+                        <router-link
+                          to="/register"
+                          class="mainPublic px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
+                        >
+                          Register
+                        </router-link>
+                      </li>
+                      <li class="nav-item">
+                        <router-link
+                          to="/login"
+                          class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
+                        >
+                          Login
+                        </router-link>
+                      </li>
+                      <li>
+                        <div>
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                            @click="deleteUser(authUserId)"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>

@@ -19,12 +19,6 @@ export const useAuthStore = defineStore("auth", {
     postBody: null,
 
     post: null,
-    posts: [],
-    users: [],
-
-    total: null,
-    current_page: 1,
-    per_page: 10,
   }),
 
   getters: {
@@ -36,18 +30,10 @@ export const useAuthStore = defineStore("auth", {
     authUserCreated: (state) => state.userCreated,
 
     getToken: (state) => state.token,
-
-    allUsers: (state) => state.users,
-    allPosts: (state) => state.posts,
-
-    totalPosts: (state) => state.total,
-    currentPage: (state) => state.current_page,
-    perPage: (state) => state.per_page,
-
+    
   },
 
   actions: {
-
     setToken(token) {
       this.token = token;
     },
@@ -84,38 +70,9 @@ export const useAuthStore = defineStore("auth", {
       this.userEmail = "";
       this.userPassword = "";
       this.userCreated = "";
-      // this.posts = [];
-      this.users = [];
-      this.total = null;
-      this.current_page = 1;
-      this.per_page = 10;
       this.post = null;
+      this.friends = null;
     },
-
-    // getUsers() {
-    //   return new Promise((resolve, reject) => {
-    //     axios
-    //       .get("http://localhost:80/api/users", {
-    //         headers: {
-    //           Authorization: `Bearer ${this.token}`,
-    //         },
-    //       })
-    //       .then((response) => {
-    //         if (!response) {
-    //           return;
-    //         }
-            
-    //         this.users = response.data.data;
-    //         this.current_page = response.data.meta.current_page;
-    //         this.per_page = response.data.meta.per_page;
-    //         this.total = response.data.meta.total;
-    //         resolve();
-    //       })
-    //       .catch((error) => {
-    //         reject(error.response);
-    //       });
-    //   });
-    // },
 
     getUsers(page = 1, filters = {}) {
       return new Promise((resolve, reject) => {
@@ -133,11 +90,6 @@ export const useAuthStore = defineStore("auth", {
             if (!response) {
               reject();
             }
-            
-            // this.users = response.data.data;
-            // this.current_page = response.data.meta.current_page;
-            // this.per_page = response.data.meta.per_page;
-            // this.total = response.data.meta.total;
             resolve(response.data);
           })
           .catch((error) => {
@@ -162,10 +114,6 @@ export const useAuthStore = defineStore("auth", {
             if (!response) {
               reject();
             }
-            // this.posts = response.data.data;
-            // this.current_page = response.data.meta.current_page;
-            // this.per_page = response.data.meta.per_page;
-            // this.total = response.data.meta.total;
             resolve(response.data);
           })
           .catch((error) => {

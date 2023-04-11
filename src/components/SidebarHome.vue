@@ -37,6 +37,24 @@
         </div>
       </div>
 
+      <div class="flex">
+        <div class="h-12 w-18 mr-4">
+          <img
+            class="h-12 w-18"
+            src="https://i.gyazo.com/cae8a2d2b7330e5842a77667a9bf5a07.png"
+            alt="posts"
+          />
+        </div>
+        <div>
+          <button
+          class="text-white text-xl px-4 py-2 mb-3 border-b-2 border-b-white"
+          @click="$router.push('friends')"
+        >
+          All Friends
+        </button>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>

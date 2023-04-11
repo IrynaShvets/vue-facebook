@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <header-app class="fixed z-10 top-0 left-0 w-screen" />
+    <header-app class="fixed z-10 top-0 left-0 w-screen border-b-2 border-white" />
     <sidebar-home
       class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
@@ -122,7 +122,7 @@ export default {
   },
  
   computed: {
-    ...mapState(useAuthStore, ["userToken"]),
+    ...mapState(useAuthStore, ["getToken"]),
   },
 
   methods: {

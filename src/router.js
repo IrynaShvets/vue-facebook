@@ -39,7 +39,6 @@ const routes = [
     name: "posts",
     component: () => import("@/pages/protected/AllPostsPage.vue"),
   },
-  
   {
     path: "/post/:id",
     name: "post",
@@ -54,6 +53,16 @@ const routes = [
     path: "/post-update/:id",
     name: "postUpdate",
     component: () => import("@/pages/protected/UpdatePostPage.vue"),
+  },
+  {
+    path: "/friends",
+    name: "friends",
+    component: () => import("@/pages/protected/FriendsPage.vue"),
+  },
+  {
+    path: "/chat",
+    name: "chat",
+    component: () => import("@/pages/protected/ChatPage.vue"),
   },
   { 
     path: '/:pathMatch(.*)*', 
