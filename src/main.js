@@ -10,18 +10,19 @@ import SidebarHome from "./components/SidebarHome.vue";
 import router from "./router";
 
 
-// import Echo from 'laravel-echo';
-// import Pusher from 'pusher-js';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
  
-// const options = {
-//     broadcaster: 'pusher',
-//     key: "4fdebec08f17a3953510"
-// }
+const options = {
+    broadcaster: "pusher",
+    key: "4fdebec08f17a3953510",
+    cluster: "eu"
+}
  
-// window.Echo = new Echo({
-//     ...options,
-//     client: new Pusher(options.key, options)
-// });
+window.Echo = new Echo({
+    ...options,
+    client: new Pusher(options.key, options)
+});
 
 
 

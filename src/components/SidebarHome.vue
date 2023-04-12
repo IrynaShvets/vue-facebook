@@ -1,5 +1,5 @@
 <template>
-  <div class="flex pt-20">
+  <div class="flex pt-24">
     <div class="h-[100%] px-6">
       <div class="flex">
         <div class="h-12 w-18 mr-4">
@@ -11,10 +11,10 @@
         </div>
         <div>
           <button
-          class="text-white text-xl px-4 py-2 mb-3 border-b-2 border-b-white"
+          class="text-white text-xl px-4 py-2 mb-5"
           @click="$router.push('users')"
         >
-          All Users
+          Users
         </button>
         </div>
       </div>
@@ -29,10 +29,10 @@
         </div>
         <div>
           <button
-          class="text-white text-xl px-4 py-2 mb-3 border-b-2 border-b-white"
+          class="text-white text-xl px-4 py-2 mb-5"
           @click="$router.push('posts')"
         >
-          All Posts
+          Posts
         </button>
         </div>
       </div>
@@ -47,10 +47,10 @@
         </div>
         <div>
           <button
-          class="text-white text-xl px-4 py-2 mb-3 border-b-2 border-b-white"
+          class="text-white text-xl px-4 py-2 mb-5"
           @click="$router.push('friends')"
         >
-          All Friends
+          Friends
         </button>
         </div>
       </div>
@@ -73,6 +73,9 @@ export default {
   computed: {
     ...mapState(useAuthStore, ["authUserName"]),
   },
+
+  mounted() {
+  }
 };
 </script>
   

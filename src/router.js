@@ -60,6 +60,11 @@ const routes = [
     component: () => import("@/pages/protected/FriendsPage.vue"),
   },
   {
+    path: "/profile",
+    name: "profile",
+    component: () => import("@/pages/protected/ProfilePage.vue"),
+  },
+  {
     path: "/chat",
     name: "chat",
     component: () => import("@/pages/protected/ChatPage.vue"),

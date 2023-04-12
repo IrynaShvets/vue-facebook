@@ -58,7 +58,7 @@
 
               <button
                 type="button"
-                @click="addFriend"
+                @click="addFriendToList(user.id)"
                 id="user.id"
                 class="flex flex-1 items-center p-2 bg-indigo-200 hover:bg-indigo-500 text-gray-800 hover:text-white transition-colors"
               >
@@ -80,28 +80,20 @@
           text-after-input="Forward"
         />
       </div>
-
-      <div>
-        <ul>
-          <FriendsListItem :friends="friends" />
-        </ul>
-      </div>
-
     </section>
   </div>
 </template>
   
 <script>
+import axios from 'axios';
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
-import FriendsListItem from "../../components/FriendsListItem.vue";
 
 export default {
   name: "AllUsersPage",
   components: {
     VueTailwindPagination,
-    FriendsListItem
   },
 
   data() {
@@ -116,7 +108,11 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["getToken"]),
+    ...mapState(useAuthStore, ["getToken", "authUserId"]),
+
+    // generateGetUsersList (id) {
+    //   return this.addFriendToList(id)
+    // },
   },
 
   methods: {
@@ -131,17 +127,44 @@ export default {
       this.getUsers(this.currentPage, { name: this.searchQuery }).then(
         (response) => {
           this.users = response.data;
-          this.userId = response.data.id;
           this.pagination = response.meta;
         }
       );
     },
 
-    addFriend() {
-      //порібно зробити вибір конкретного id
-      let user = {};
-      user.id = this.userId;
-      this.friends.push(user);
+    addFriendToList(id) {
+        axios
+          .post(`http://localhost:80/api/friend/${id}`, null, {
+            headers: {
+              Authorization: `Bearer ${this.getToken}`,
+            },
+          })
+          .then((response) => {
+            if (!response.data.data) {
+              return;
+            }
+            if (id === this.authUserId) {
+              alert("You don't need to add myself to your friends list.");
+              
+            }
+            if (id !== this.authUserId) {
+               this.friends = response.data.data;
+               
+               this.friends.map((el) => {
+                if (el.id === id) {
+                  alert("You have added this user to your friends list already.");
+                  return;
+               }})
+
+            alert("You have added this user to your friends list.");
+            // return response.data;
+            }
+            // console.log(this.friends)
+           
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
   },
 

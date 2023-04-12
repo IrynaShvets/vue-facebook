@@ -1,7 +1,9 @@
 <template>
   <div>
     <header-app />
-    <section class="bg-gradient-to-r from-indigo-700 from-10% via-sky-700 via-30% to-emerald-700 to-90%">
+    <section
+      class="bg-gradient-to-r from-indigo-700 from-10% via-sky-700 via-30% to-emerald-700 to-90%"
+    >
       <div>
         <div class="flex items-center px-4 py-5 sm:px-6">
           <div v-if="image">
@@ -20,6 +22,17 @@
         </div>
       </div>
 
+      <h2>Friends</h2>
+      <ul v-if="friends">
+        <li v-for="friend in friends" :key="friend.id">
+          <div class="flex-initial w-3/5">
+            <p>Name: {{ friend.name }}</p>
+          </div>
+          
+
+        </li>
+      </ul>
+     
     </section>
     <footer-app class="fixed bottom-0 left-0 right-0" />
   </div>
@@ -40,6 +53,7 @@ export default {
       name: "",
       image: "",
       created_at: "",
+      friends: [],
     };
   },
 
@@ -65,6 +79,8 @@ export default {
             this.name = response.data.data.name;
             this.image = response.data.data.image;
             this.created_at = response.data.data.created_at;
+            this.friends = response.data.data.friends;
+            console.log();
 
             resolve();
           })
@@ -78,7 +94,6 @@ export default {
   mounted() {
     this.getUser();
   },
-  
 };
 </script>
 
