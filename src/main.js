@@ -24,10 +24,6 @@ window.Echo = new Echo({
     client: new Pusher(options.key, options)
 });
 
-
-
-
-
 const app = createApp(App);
 const pinia = createPinia();
 

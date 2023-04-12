@@ -24,7 +24,10 @@
       <h1 class="text-gray-900">All Users</h1>
       <ul v-if="users">
         <li v-for="user in users" :id="user.id" :key="user.id" class="mb-10">
-          <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+          <div
+            v-if="user.id !== authUserId"
+            class="overflow-hidden bg-white shadow sm:rounded-lg"
+          >
             <div class="flex items-center px-4 py-5 sm:px-6">
               <div v-if="user.image">
                 <img
@@ -56,14 +59,17 @@
                 <span>More info about user</span>
               </router-link>
 
-              <button
-                type="button"
-                @click="addFriendToList(user.id)"
-                id="user.id"
-                class="flex flex-1 items-center p-2 bg-indigo-200 hover:bg-indigo-500 text-gray-800 hover:text-white transition-colors"
-              >
-                Add friend
-              </button>
+              <div>
+                <button
+                  type="button"
+                  @click="addFriendToList(user.id)"
+                  id="user.id"
+                  class="flex flex-1 items-center p-2 bg-indigo-200 hover:bg-indigo-500 text-gray-800 hover:text-white transition-colors"
+                >
+                  Add friend
+                </button>
+              </div>
+              
             </div>
           </div>
         </li>
@@ -85,10 +91,11 @@
 </template>
   
 <script>
-import axios from 'axios';
+import axios from "axios";
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
+// import { getListFriends } from "../../services/user.service";
 
 export default {
   name: "AllUsersPage",
@@ -104,15 +111,12 @@ export default {
       pagination: null,
       currentPage: 1,
       friends: [],
+      existIndex: null,
     };
   },
 
   computed: {
     ...mapState(useAuthStore, ["getToken", "authUserId"]),
-
-    // generateGetUsersList (id) {
-    //   return this.addFriendToList(id)
-    // },
   },
 
   methods: {
@@ -132,44 +136,58 @@ export default {
       );
     },
 
-    addFriendToList(id) {
+    getFriends() {
+      return new Promise((resolve, reject) => {
         axios
-          .post(`http://localhost:80/api/friend/${id}`, null, {
+          .get(`http://localhost:80/api/users/${this.authUserId}`, {
             headers: {
               Authorization: `Bearer ${this.getToken}`,
             },
           })
           .then((response) => {
-            if (!response.data.data) {
-              return;
+            if (!response) {
+              reject(response);
             }
-            if (id === this.authUserId) {
-              alert("You don't need to add myself to your friends list.");
-              
-            }
-            if (id !== this.authUserId) {
-               this.friends = response.data.data;
-               
-               this.friends.map((el) => {
-                if (el.id === id) {
-                  alert("You have added this user to your friends list already.");
-                  return;
-               }})
-
-            alert("You have added this user to your friends list.");
-            // return response.data;
-            }
-            // console.log(this.friends)
-           
+            this.friends = response.data.data.friends;
+            resolve();
           })
           .catch((error) => {
-            console.log(error);
+            reject(error.response);
           });
+      });
+    },
+
+    addFriendToList(id) {
+      this.existIndex = this.friends.findIndex((el) => el.id === id);
+
+      if (this.existIndex !== -1) {
+        alert("You have added this user to your friends list already.");
+      }
+      if (this.existIndex === -1) {
+        alert("You have successfully added a friend.");
+      }
+
+      axios
+        .post(`http://localhost:80/api/friend/${id}`, null, {
+          headers: {
+            Authorization: `Bearer ${this.getToken}`,
+          },
+        })
+        .then((response) => {
+          if (!response.data.data) {
+            return;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 
   mounted() {
     this.getUsersList();
+    // getListFriends();
+    this.getFriends();
   },
 };
 </script>

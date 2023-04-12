@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       friends: [],
-      
+      id: null,
     };
   },
 
@@ -93,7 +93,9 @@ export default {
                 return;
             }
             
-            alert("Do you want to delete friend?");
+            this.friends = response.data.data;
+            console.log(response.data.data)
+            //alert("Do you want to delete friend?");
           })
           .catch((error) => {
             console.log(error);
@@ -103,7 +105,7 @@ export default {
 
   mounted() {
     this.getFriends();
-    this.deleteFriend();
+    // this.deleteFriend();
   },
 };
 </script>
