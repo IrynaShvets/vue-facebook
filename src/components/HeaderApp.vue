@@ -4,78 +4,161 @@
       <nav class="relative flex items-center justify-center">
         <div v-if="authUserName" class="flex items-center justify-center">
           <div class="h-12 w-18">
-            <img
-              class="h-12 w-18"
-              src="https://i.gyazo.com/93114b7cff56d5426ec1f3549083e16d.png"
-              alt="logo"
-            />
+            <router-link
+              to="/"
+              active-class="active-link"
+              exact-active-class="exact-active-link"
+              class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+            >
+              <img
+                class="h-12 w-18"
+                src="https://i.gyazo.com/93114b7cff56d5426ec1f3549083e16d.png"
+                alt="logo"
+              />
+            </router-link>
           </div>
           <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
             <li class="nav-item">
-              <router-link
-                to="/profile"
-                active-class="active-link"
-                exact-active-class="exact-active-link"
-                class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-              >
-                <svg
-                  class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
-                  viewBox="0 0 24 24"
+              <div className="group relative text-2xl">
+                <router-link
+                  to="/profile"
+                  active-class="active-link"
+                  exact-active-class="exact-active-link"
+                  class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 >
-                  <path d="M20.016 15.984v-1.5q0-1.313-2.063-2.156t-3.938-0.844-3.938 0.844-2.063 2.156v1.5h12zM14.016 3.984q-1.219 0-2.109 0.891t-0.891 2.109 0.891 2.109 2.109 0.891 2.109-0.891 0.891-2.109-0.891-2.109-2.109-0.891zM20.016 2.016q0.797 0 1.383 0.586t0.586 1.383v12q0 0.797-0.586 1.406t-1.383 0.609h-12q-0.797 0-1.406-0.609t-0.609-1.406v-12q0-0.797 0.609-1.383t1.406-0.586h12zM3.984 6v14.016h14.016v1.969h-14.016q-0.797 0-1.383-0.586t-0.586-1.383v-14.016h1.969z"></path>
-                </svg>
-              </router-link>
+                  <svg
+                  active-class="active-link"
+                  exact-active-class="exact-active-link"
+                    class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M20.016 15.984v-1.5q0-1.313-2.063-2.156t-3.938-0.844-3.938 0.844-2.063 2.156v1.5h12zM14.016 3.984q-1.219 0-2.109 0.891t-0.891 2.109 0.891 2.109 2.109 0.891 2.109-0.891 0.891-2.109-0.891-2.109-2.109-0.891zM20.016 2.016q0.797 0 1.383 0.586t0.586 1.383v12q0 0.797-0.586 1.406t-1.383 0.609h-12q-0.797 0-1.406-0.609t-0.609-1.406v-12q0-0.797 0.609-1.383t1.406-0.586h12zM3.984 6v14.016h14.016v1.969h-14.016q-0.797 0-1.383-0.586t-0.586-1.383v-14.016h1.969z"
+                    ></path>
+                  </svg>
+                </router-link>
+                <ul
+                  className="rounded absolute hidden text-gray-700 pt-1 group-hover:block w-56"
+                >
+                  <li
+                    className="bg-gray-600 hover:bg-gray-400  py-2 px-4 cursor-pointer"
+                  >
+                    <router-link
+                      to="/profile"
+                      active-class="active-link"
+                      exact-active-class="exact-active-link"
+                      class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                    >
+                      Profile
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
-              <router-link
-                to="/"
-                active-class="active-link"
-                exact-active-class="exact-active-link"
-                class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-              >
-                <svg
-                  class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
-                  viewBox="0 0 32 32"
+              <div className="group relative text-2xl">
+                <router-link
+                  to="/"
+                  active-class="active-link"
+                  exact-active-class="exact-active-link"
+                  class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 >
-                  <path
-                    d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"
-                  ></path>
-                </svg>
-              </router-link>
+                  <svg
+                    class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"
+                    ></path>
+                  </svg>
+                </router-link>
+                <ul
+                  className="rounded absolute hidden text-gray-700 pt-1 group-hover:block w-56"
+                >
+                  <li
+                    className="bg-gray-600 hover:bg-gray-400  py-2 px-4 cursor-pointer"
+                  >
+                    <router-link
+                      to="/"
+                      active-class="active-link"
+                      exact-active-class="exact-active-link"
+                      class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                    >
+                      Home
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
-              <router-link
-                to="/chat"
-                active-class="active-link"
-                exact-active-class="exact-active-link"
-                class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-              >
-                <svg
-                  class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
-                  viewBox="0 0 20 20"
+              <div className="group relative text-2xl">
+                <router-link
+                  to="/chat"
+                  active-class="active-link"
+                  exact-active-class="exact-active-link"
+                  class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 >
-                  <path
-                    d="M10 15l-4 4v-4h-4c-1.105 0-2-0.895-2-2v0-10c0-1.1 0.9-2 2-2h16c1.105 0 2 0.895 2 2v0 10c0 1.105-0.895 2-2 2v0h-8zM5 7v2h2v-2h-2zM9 7v2h2v-2h-2zM13 7v2h2v-2h-2z"
-                  ></path>
-                </svg>
-              </router-link>
+                  <svg
+                    class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M10 15l-4 4v-4h-4c-1.105 0-2-0.895-2-2v0-10c0-1.1 0.9-2 2-2h16c1.105 0 2 0.895 2 2v0 10c0 1.105-0.895 2-2 2v0h-8zM5 7v2h2v-2h-2zM9 7v2h2v-2h-2zM13 7v2h2v-2h-2z"
+                    ></path>
+                  </svg>
+                </router-link>
+                <ul
+                  className="rounded absolute hidden text-gray-700 pt-1 group-hover:block w-56"
+                >
+                  <li
+                    className="bg-gray-600 hover:bg-gray-400  py-2 px-4 cursor-pointer"
+                  >
+                    <router-link
+                      to="/chat"
+                      active-class="active-link"
+                      exact-active-class="exact-active-link"
+                      class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                    >
+                      Chat
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
-              <router-link
-                to="/posts-create"
-                active-class="active-link"
-                exact-active-class="exact-active-link"
-                class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-              >
-                <svg
-                  class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
-                  viewBox="0 0 32 32"
+              <div className="group relative text-2xl">
+                <router-link
+                  to="/posts-create"
+                  active-class="active-link"
+                  exact-active-class="exact-active-link"
+                  class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 >
-                  <path
-                    d="M11.293 19l-3.293-2.8v-8.198c0-0.558 0.448-1.002 1-1.002h15c0.545 0 1 0.449 1 1.002v8.198l-3.333 2.8h-10.374zM12.469 20l1.783 1.516h4.42l1.805-1.516h-8.007zM22.185 20.127l-2.185 1.873 5.923 5.077-0.808 0.808-5.996-5.139-5.223 0.023-0.021-0.018-5.99 5.135-0.808-0.808 5.923-5.077-2.185-1.873-3.815-3.227v-5.54l-3 2.64v14.006c0 1.101 0.89 1.994 2.004 1.994h20.993c1.107 0 2.004-0.895 2.004-1.994v-14.006l-3-2.64v5.54l-3.815 3.227zM19.909 6l-3.409-3-3.409 3h6.818zM10 10v1h13v-1h-13zM10 13v1h13v-1h-13zM10 16v1h13v-1h-13z"
-                  ></path>
-                </svg>
-              </router-link>
+                  <svg
+                    class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M25 21h-3v-1h3v-3h1v3h3v1h-3v3h-1v-3zM20.135 16.83l-2.135-1.83 5.923-5.077-0.808-0.808-8.615 7.385-8.615-7.385-0.808 0.808 5.923 5.077-5.923 5.077 0.808 0.808 5.99-5.135 2.625 2.25 2.625-2.25 2.441 2.093c-0.364 0.811-0.566 1.711-0.566 2.657 0 0.886 0.177 1.73 0.498 2.5h-15.495c-1.114 0-2.004-0.893-2.004-1.994v-12.012c0-1.1 0.897-1.994 2.004-1.994h20.993c1.114 0 2.004 0.893 2.004 1.994v5.18c-0.482-0.114-0.984-0.174-1.5-0.174-2.228 0-4.194 1.121-5.365 2.83v0 0zM25.5 26c3.038 0 5.5-2.462 5.5-5.5s-2.462-5.5-5.5-5.5c-3.038 0-5.5 2.462-5.5 5.5s2.462 5.5 5.5 5.5v0z"
+                    ></path>
+                  </svg>
+                </router-link>
+                <ul
+                  className="rounded absolute hidden text-gray-700 pt-1 group-hover:block w-56"
+                >
+                  <li
+                    className="bg-gray-600 hover:bg-gray-400  py-2 px-4 cursor-pointer"
+                  >
+                    <router-link
+                      to="/posts-create"
+                      active-class="active-link"
+                      exact-active-class="exact-active-link"
+                      class="px-1 py-1 flex items-center rounded-lg text-xs uppercase font-bold leading-snug text-white hover:text-gray-800"
+                    >
+                      Create post
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
           <div class="flex items-center">

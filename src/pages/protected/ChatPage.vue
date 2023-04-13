@@ -51,6 +51,7 @@
 </template>
 
 <script>
+ 
 export default {
   name: "ChatPage",
 
@@ -61,12 +62,24 @@ export default {
     };
   },
 
+  created() {
+        this.listen();
+    },
+
   methods: {
     
     sendMessage() {
       console.log("message")
+    },
+
+    listen() {
+      window.Echo.join('chat').listen('NewMessage', (e) => {
+        console.log(e)
+    });
+      console.log(window.Echo)
     }
-  },
+
+    },
 
 };
 </script>

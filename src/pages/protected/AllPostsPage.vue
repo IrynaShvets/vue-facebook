@@ -5,23 +5,23 @@
       class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
 
-    <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
+    <section class="absolute overflow-y-auto left-[290px] top-[80px] right-[0]">
       <div>
-        <form @click.prevent="getPostsList">
+        <form @click.prevent="getPostsList" class="relative mr-[40px]">
           <input
           type="text"
           name="searchQuery"
-          class="w-[500px] h-[42px] py-4 px-6 border-0 outline-0"
+          class="w-[100%] h-[42px] py-4 px-6 border-0 outline-0"
           v-model="searchQuery"
           placeholder="Search posts"
         />
 
-        <button type="submit">Search</button>
+        <button type="submit" class="w-[170px] h-[100%] absolute right-[0] transition-all duration-500 bg-gradient-to-br to-white via-black from-blue-400 bg-size-200 hover:bg-right-bottom text-gray-800 hover:text-white">Search</button>
         </form>
         
       </div>
       <h1 class="text-gray-900">All posts</h1>
-      <ul v-if="posts">
+      <ul v-if="posts" class="mr-[40px]">
         <li
           v-for="post in posts"
           :id="post.id"
@@ -34,8 +34,7 @@
                 <img
                   :src="post.image"
                   :alt="post.title"
-                  width="380"
-                  height="auto"
+                  class="w-[300px] h-[250px] align-middle"
                 />
               </div>
 

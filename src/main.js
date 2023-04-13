@@ -16,7 +16,8 @@ import Pusher from 'pusher-js';
 const options = {
     broadcaster: "pusher",
     key: "4fdebec08f17a3953510",
-    cluster: "eu"
+    cluster: "eu",
+    // useTLS: true
 }
  
 window.Echo = new Echo({
