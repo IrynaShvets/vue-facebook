@@ -73,10 +73,21 @@ export default {
     },
 
     listen() {
-      window.Echo.join('chat').listen('NewMessage', (e) => {
-        console.log(e)
-    });
-      console.log(window.Echo)
+      // window.Echo.join('chat').listen('NewMessage', (e) => {
+      //   console.log(e)
+    // });
+      
+      // let channel = window.Echo.options.client.subscribe('chat')
+      // console.log(channel)
+      // channel.bind("NewMessage", function(message) {
+      //   console.log(message)
+
+      // })
+
+      window.Echo.channel('chat')
+        .listen('.MessageSent', (message) => {
+            console.log(message);
+        });
     }
 
     },
