@@ -40,6 +40,11 @@ const routes = [
     component: () => import("@/pages/protected/AllPostsPage.vue"),
   },
   {
+    path: "/commons",
+    name: "commons",
+    component: () => import("@/pages/protected/CommonsPage.vue"),
+  },
+  {
     path: "/post/:id",
     name: "post",
     component: () => import("@/pages/protected/PostPage.vue"),
@@ -48,6 +53,11 @@ const routes = [
     path: "/posts-create",
     name: "postsCreate",
     component: () => import("@/pages/protected/CreatePostPage.vue"),
+  },
+  {
+    path: "/common/create",
+    name: "commonCreate",
+    component: () => import("@/pages/protected/CreateCommonPage.vue"),
   },
   {
     path: "/post-update/:id",
@@ -65,7 +75,7 @@ const routes = [
     component: () => import("@/pages/protected/ProfilePage.vue"),
   },
   {
-    path: "/chat",
+    path: "/chat/:id",
     name: "chat",
     component: () => import("@/pages/protected/ChatPage.vue"),
   },

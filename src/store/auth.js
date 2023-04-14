@@ -19,6 +19,7 @@ export const useAuthStore = defineStore("auth", {
     postBody: null,
 
     post: null,
+    common: null,
   }),
 
   getters: {
@@ -72,6 +73,7 @@ export const useAuthStore = defineStore("auth", {
       this.userCreated = "";
       this.post = null;
       this.friends = null;
+      this.common = null;
     },
 
     getUsers(page = 1, filters = {}) {
@@ -122,6 +124,26 @@ export const useAuthStore = defineStore("auth", {
       });
     },
 
+    getCommons() {
+      return new Promise((resolve, reject) => {
+        axios
+          .get("http://localhost:80/api/common", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          })
+          .then((response) => {
+            if (!response) {
+              reject();
+            }
+            resolve(response.data);
+          })
+          .catch((error) => {
+            reject(error.response);
+          });
+      });
+    },
+
     createPost(data) {
       return new Promise((resolve, reject) => {
         axios
@@ -150,6 +172,36 @@ export const useAuthStore = defineStore("auth", {
           });
       });
     },
+
+    createCommon(data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            "http://localhost:80/api/common",
+            {
+              ...data,
+            },
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${this.token}`,
+              },
+            }
+          )
+          .then((response) => {
+            if (!response.data) {
+              return;
+            }
+            this.common = response.data.common;
+            resolve();
+            
+          })
+          .catch((error) => {
+            reject(error.response);
+          });
+      });
+    },
+
 
     updatePost(data) {
       return new Promise((resolve, reject) => {

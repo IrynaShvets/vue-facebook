@@ -93,7 +93,7 @@
             <li class="nav-item">
               <div className="group relative text-2xl">
                 <router-link
-                  to="/chat"
+                  to="/common/create"
                   active-class="active-link"
                   exact-active-class="exact-active-link"
                   class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
@@ -114,12 +114,12 @@
                     className="bg-gray-600 hover:bg-gray-400  py-2 px-4 cursor-pointer"
                   >
                     <router-link
-                      to="/chat"
+                      to="/common/create"
                       active-class="active-link"
                       exact-active-class="exact-active-link"
                       class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                     >
-                      Chat
+                      Create common
                     </router-link>
                   </li>
                 </ul>

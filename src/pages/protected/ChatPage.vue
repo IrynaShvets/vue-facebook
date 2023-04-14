@@ -13,10 +13,12 @@
         </div>
       </div>
 
-      <div class="max-w-7xl mx-auto pt-6">
+      <div class="overflow-y-auto  pt-6">
         <ul v-if="messages" class="mr-[20px]">
           <li v-for="message in messages" :key="message.id" class="">
-            <p class="text-white">This is the message: {{ message }}</p>
+            <p class="text-white"> FROM : {{ message.sender }}</p>
+            <p class="text-white">Created AT : {{ message.created_at }}</p> 
+            <p class="text-white">This is the message: {{ message.message }}</p>
           </li>
         </ul>
       </div>
@@ -34,7 +36,7 @@
             class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-full py-3" />
 
           <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
-            <button @click="sendMessage(message)" type="button"
+            <button @click="sendMessage()" type="button"
               class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                 class="h-6 w-6 transform rotate-90">
@@ -59,10 +61,12 @@ export default {
   name: "ChatPage",
 
   data() {
+    let receiver_id = this.$route.params.id;
+
     return {
       messages: null,
       message: "",
-      receiver_id: null,
+      receiver_id: receiver_id,
       errors: {
         message: "",
       },
@@ -79,17 +83,17 @@ export default {
   },
 
   methods: {
-    sendMessage(message) {
+    sendMessage() {
 
-      // let user_message = {
-      //   receiver_id: this.receiver_id,
-      //   message: this.message,
-      // };
+      let user_message = {
+        receiver_id: this.receiver_id,
+        message: this.message,
+      };
       // this.messages.value.push(user_message);
       axios
         .post(
           "http://localhost:80/api/chat/send",
-          { message },
+            user_message,
           {
             headers: {
               Authorization: `Bearer ${this.getToken}`,
@@ -100,6 +104,8 @@ export default {
           if (!response) {
             return;
           }
+          this.message = '';
+          this.messages.push(response.data.data);
           console.log(response);
 
         })
@@ -133,7 +139,7 @@ export default {
 
     getMessages() {
       axios
-        .get(`http://localhost:80/api/chat/${this.authUserId}`, {
+        .get(`http://localhost:80/api/chat/${this.receiver_id}`, {
           headers: {
             Authorization: `Bearer ${this.getToken}`,
           },
@@ -152,9 +158,14 @@ export default {
     },
 
     listen() {
-      let channel = window.Echo.channel("chat");
-      channel.listen(".new-message", (message) => {
-        this.messages.push(message);
+      let channel = window.Echo.channel(`chat.${this.authUserId}`);
+      channel.listen(".new-message", (data) => {
+        this.messages.push({
+          sender: data.sender,
+          message: data.message,
+          created_at: data.created_at
+        });
+        console.log('msg', data);
         // this.message = message;
         // console.log(this.message);
 // this.messages.value.push({   //         message: this.message,   

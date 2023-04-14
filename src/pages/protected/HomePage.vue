@@ -6,11 +6,18 @@
     />
     <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
       <h1>home</h1>
+
+      <button type="button" @click="getPdf">Generete users pdf </button>
+
     </section>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import { mapState } from "pinia";
+import { useAuthStore } from "../../store/auth";
+
 export default {
   name: "HomePage",
   components: {},
@@ -18,6 +25,25 @@ export default {
   data() {
     return {};
   },
+
+  computed: {
+    ...mapState(useAuthStore, ["token"]),
+  },
+
+  methods: {
+    getPdf() {
+      axios.get('http://localhost:80/api/generate/pdf', {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        }
+      }).then((response) => {
+        console.log(response)
+      }).catch((errors) => {
+        console.error(errors)
+      })
+    }
+  }
+
 };
 </script>
 

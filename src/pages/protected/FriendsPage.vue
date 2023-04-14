@@ -12,11 +12,31 @@
         <li
           v-for="friend in friends"
           :key="friend.id"
-          class="flex items-center justify-between h-[70px] bg-[#78290fa2] mb-3 p-4 rounded hover:bg-[#78290f] hover:text-white"
+          class="mb-10"
         >
-          <div class="">
-            <p>{{ friend.name }}</p>
-          </div>
+        <div class="flex items-center justify-between bg-[#02051160] shadow sm:rounded-lg px-4 py-5 sm:px-6">
+              <div v-if="friend.image">
+                <img
+                  class="w-[100px] h-[100px] rounded-[50%] align-middle border-slate-900 border-2"
+                  :src="friend.image"
+                  :alt="friend.name"
+                />
+              </div>
+
+              <div v-else>
+                <img
+                  class="w-[70px] h-[70px] rounded-[50%] align-middle"
+                  src="https://i.gyazo.com/50c000c0e4715eba3a2d778c01ac1c5c.png"
+                  :alt="friend.name"
+                />
+              </div>
+
+              <div class="ml-10">
+                <h3 class="font-medium text-[30px] text-gray-500">{{ friend.name }}</h3>
+                <h2 class="mt-1 text-gray-900">{{ friend.email }}</h2>
+              </div>
+
+              <span @click="redirectChat(friend.id)" class="w-[100px] h-[auto] rounded py-2 px-4 transition-all duration-500 bg-gradient-to-br to-white via-black from-blue-400 bg-size-200 hover:bg-right-bottom text-gray-800 hover:text-white">Chat</span>
           <button type="button" @click="deleteFriend(friend.id)">
             <svg
               class="inline-block w-7 h-7 stroke-current stroke-0 fill-black hover:fill-white"
@@ -27,8 +47,7 @@
               ></path>
             </svg>
           </button>
-
-
+            </div>
         </li>
       </ul>
     </section>
@@ -54,9 +73,15 @@ export default {
     ...mapState(useAuthStore, ["getToken", "authUserId"]),
   },
 
-
-
   methods: {
+    redirectChat(id) {
+      this.$router.push({
+        name: 'chat',
+        params: {
+          id: id
+        }
+      });
+    },
     getFriends() {
       return new Promise((resolve, reject) => {
         
