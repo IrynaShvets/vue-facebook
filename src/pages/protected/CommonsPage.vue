@@ -10,55 +10,42 @@
       <section class="absolute overflow-y-auto left-[290px] top-[80px] right-[0]">
 
         <h1 class="text-gray-900">All Community</h1>
-        <ul v-if="users" class="mr-[40px]">
-          <li v-for="user in users" :id="user.id" :key="user.id" class="mb-10">
+        <ul v-if="commons" class="mr-[40px]">
+          <li v-for="common in commons" :id="common.id" :key="common.id" class="mb-10">
             <div
-              v-if="user.id !== authUserId"
+              
               class="flex items-center justify-between overflow-hidden bg-white shadow sm:rounded-lg"
             >
               <div class="flex items-center px-4 py-5 sm:px-6">
-                <div v-if="user.image">
-                  <img
-                    class="w-[100px] h-[100px] rounded-[50%] align-middle border-slate-900 border-2"
-                    :src="user.image"
-                    :alt="user.name"
-                  />
-                </div>
-  
-                <div v-else>
-                  <img
-                    class="w-[70px] h-[70px] rounded-[50%] align-middle"
-                    src="https://i.gyazo.com/50c000c0e4715eba3a2d778c01ac1c5c.png"
-                    :alt="user.name"
-                  />
-                </div>
   
                 <div class="ml-10">
-                  <h3 class="font-medium text-[30px] text-gray-500">{{ user.name }}</h3>
-                  <h2 class="mt-1 text-gray-900">{{ user.email }}</h2>
+                  <h3 class="font-medium text-[30px] text-gray-500">{{ common.title }}</h3>
+                
                 </div>
               </div>
   
               <div class="flex">
                 <router-link
-                  :to="{ name: 'user', params: { id: user.id } }"
+                  :to="{ name: 'common', params: { id: common.id } }"
                   class="flex flex-1 items-center rounded transition-all duration-500 bg-gradient-to-br to-white via-black from-yellow-500 bg-size-200 hover:bg-right-bottom p-2 border-r-2 border-white text-gray-800 hover:text-white"
                 >
-                  <span>More info about user</span>
+                  <span>More info about community</span>
                 </router-link>
+                </div>
   
                 <div>
                   <button
                     type="button"
-                    @click="addFriendToList(user.id)"
-                    id="user.id"
+                    @click="addCommonToList(common.id)"
+                    id="common.id"
                     class="flex flex-1 items-center rounded p-2 transition-all duration-500 bg-gradient-to-br to-white via-black from-yellow-500 bg-size-200 hover:bg-right-bottom text-gray-800 hover:text-white"
                   >
-                    Add friend
+                    Add common
                   </button>
                 </div>
+
               </div>
-            </div>
+            
           </li>
         </ul>
   
@@ -68,7 +55,7 @@
   </template>
     
   <script>
-//   import axios from "axios";
+  import axios from "axios";
   import { mapState, mapActions } from "pinia";
   import { useAuthStore } from "../../store/auth";
   // import { getListFriends } from "../../services/user.service";
@@ -83,32 +70,57 @@
       return {
         
         commons: null,
-        
-        
+    
       };
     },
   
     computed: {
-      ...mapState(useAuthStore, ["getToken", "authUserId"]),
+      ...mapState(useAuthStore, ["token", "authUserId"]),
     },
   
     methods: {
       ...mapActions(useAuthStore, ["createCommon", "getCommons"]),
   
-     
-
     getCommonsList() {
       this.getCommons().then(
         (response) => {
           this.commons = response.data;
-          
+          console.log(response)
         }
       );
     },
+
+    addCommonToList(id) {
+    //   this.existIndex = this.commons.findIndex((el) => el.id === id);
+
+    //   if (this.existIndex !== -1) {
+    //     alert("No need to join this community, you are in it.");
+    //   }
+    //   if (this.existIndex === -1) {
+    //     alert("You have successfully joined the community.");
+    //   }
+
+      axios
+        .post(`http://localhost:80/api/common/${id}`, null, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then((response) => {
+          if (!response.data.data) {
+            return;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+
     },
   
     mounted() {
-      
+        this.getCommonsList();
       // getListFriends();
       //yfна отримання списку своїх комуніті +  пост на додавання себе до комуніті  так як френдс
     },

@@ -45,6 +45,11 @@ const routes = [
     component: () => import("@/pages/protected/CommonsPage.vue"),
   },
   {
+    path: "/common/:id",
+    name: "common",
+    component: () => import("@/pages/protected/CommonPage.vue"),
+  },
+  {
     path: "/post/:id",
     name: "post",
     component: () => import("@/pages/protected/PostPage.vue"),

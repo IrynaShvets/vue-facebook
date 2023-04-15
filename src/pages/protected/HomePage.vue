@@ -1,20 +1,47 @@
 <template>
   <div class="relative">
-    <header-app class="fixed z-10 top-0 left-0 w-screen border-b-2 border-gray-200" />
+    <header-app
+      class="fixed z-10 top-0 left-0 w-screen border-b-2 border-gray-200"
+    />
     <sidebar-home
       class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
     <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
       <h1>home</h1>
 
-      <button type="button" @click="getPdf">Generete users pdf </button>
+      <button type="button" @click="getPdf && openModal">
+        Generete users pdf
+      </button>
 
+      <button type="button" @click="openModal">Show pdf</button>
+      <div v-show="showModal">
+        <div
+          class="fixed top-0 bottom-0 left-0 right-0 flex justify-center bg-[#000000da]"
+        >
+          <div
+            class="relative bg-white h-[500px] w-[500px] p-5 rounded-lg"
+            @click.stop
+          >
+            <button class="p-2 border-0 bg-transparent absolute right-2 top-2">
+              <svg
+                class="inline-block w-5 h-5 stroke-current stroke-0 fill-gray"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M31.708 25.708c-0-0-0-0-0-0l-9.708-9.708 9.708-9.708c0-0 0-0 0-0 0.105-0.105 0.18-0.227 0.229-0.357 0.133-0.356 0.057-0.771-0.229-1.057l-4.586-4.586c-0.286-0.286-0.702-0.361-1.057-0.229-0.13 0.048-0.252 0.124-0.357 0.228 0 0-0 0-0 0l-9.708 9.708-9.708-9.708c-0-0-0-0-0-0-0.105-0.104-0.227-0.18-0.357-0.228-0.356-0.133-0.771-0.057-1.057 0.229l-4.586 4.586c-0.286 0.286-0.361 0.702-0.229 1.057 0.049 0.13 0.124 0.252 0.229 0.357 0 0 0 0 0 0l9.708 9.708-9.708 9.708c-0 0-0 0-0 0-0.104 0.105-0.18 0.227-0.229 0.357-0.133 0.355-0.057 0.771 0.229 1.057l4.586 4.586c0.286 0.286 0.702 0.361 1.057 0.229 0.13-0.049 0.252-0.124 0.357-0.229 0-0 0-0 0-0l9.708-9.708 9.708 9.708c0 0 0 0 0 0 0.105 0.105 0.227 0.18 0.357 0.229 0.356 0.133 0.771 0.057 1.057-0.229l4.586-4.586c0.286-0.286 0.362-0.702 0.229-1.057-0.049-0.13-0.124-0.252-0.229-0.357z"
+                ></path>
+              </svg>
+            </button>
+            <h2 class="text-2xl text-[#1B065E] mb-4">Content.</h2>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import { mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
 
@@ -23,7 +50,9 @@ export default {
   components: {},
 
   data() {
-    return {};
+    return {
+      showModal: false,
+    };
   },
 
   computed: {
@@ -32,18 +61,25 @@ export default {
 
   methods: {
     getPdf() {
-      axios.get('http://localhost:80/api/generate/pdf', {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        }
-      }).then((response) => {
-        console.log(response)
-      }).catch((errors) => {
-        console.error(errors)
-      })
-    }
-  }
+      axios
+        .get("http://localhost:80/api/generate/pdf", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then((response) => {
+          
+          console.log(response);
+        })
+        .catch((errors) => {
+          console.error(errors);
+        });
+    },
 
+    openModal() {
+      this.showModal = true;
+    },
+  },
 };
 </script>
 
