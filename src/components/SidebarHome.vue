@@ -1,10 +1,13 @@
 <template>
   <div class="flex pt-24">
-    <div class="h-[100%] px-6">
-      <div class="flex">
-        <div class="h-12 w-18 mr-4">
+    <div class="h-[100%]">
+      <div class="flex items-baseline py-2 px-1 relative group mb-3">
+        <button
+          class="w-[100%] text-white text-xl px-4 outline-none border-none"
+          @click="$router.push('users')"
+        >
           <svg
-            class="inline-block w-7 h-7 stroke-current stroke-0 fill-white"
+            class="inline-block w-7 h-7 stroke-current stroke-0 fill-white mr-4"
             viewBox="0 0 36 32"
           >
             <path
@@ -14,15 +17,11 @@
               d="M10.225 24.854c1.728-1.13 3.877-1.989 6.243-2.513-0.47-0.556-0.897-1.176-1.265-1.844-0.95-1.726-1.453-3.627-1.453-5.497 0-2.689 0-5.228 0.956-7.305 0.928-2.016 2.598-3.265 4.976-3.734-0.529-2.39-1.936-3.961-5.682-3.961-6 0-6 4.029-6 9 0 3.096 1.797 6.191 4 7.432v1.649c-6.784 0.555-12 3.888-12 7.918h8.719c0.454-0.403 0.956-0.787 1.506-1.146z"
             ></path>
           </svg>
-        </div>
-        <div>
-          <button
-            class="text-white text-xl px-4 py-2 mb-5"
-            @click="$router.push('users')"
-          >
-            Users
-          </button>
-        </div>
+          Users
+        </button>
+        <span
+          className="absolute left-0 -bottom-1 w-full h-1 bg-gray-700 -z-10 group-hover:h-full group-hover:transition-all"
+        ></span>
       </div>
 
       <div class="flex">

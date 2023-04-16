@@ -12,6 +12,8 @@ export const useAuthStore = defineStore("auth", {
     userPassword: "",
     userCreated: "",
 
+    pdf: null,
+
     postId: null,
     postTitle: null,
     postDescription: null,
@@ -35,6 +37,10 @@ export const useAuthStore = defineStore("auth", {
   },
 
   actions: {
+    setPdf(pdf) {
+      this.pdf = pdf;
+    },
+
     setToken(token) {
       this.token = token;
     },
@@ -74,6 +80,7 @@ export const useAuthStore = defineStore("auth", {
       this.post = null;
       this.friends = null;
       this.common = null;
+      this.pdf = null;
     },
 
     getUsers(page = 1, filters = {}) {
@@ -100,13 +107,14 @@ export const useAuthStore = defineStore("auth", {
       });
     },
 
-    getPosts(page = 1, filters = {}) {
+    getPosts(page = 1, filters = {}, sort = {}) {
       return new Promise((resolve, reject) => {
         axios
           .get("http://localhost:80/api/post/all", {
             params: {
               page: page,
-              ...filters
+              ...filters,
+              ...sort
             },
             headers: {
               Authorization: `Bearer ${this.token}`,
@@ -202,7 +210,6 @@ export const useAuthStore = defineStore("auth", {
       });
     },
 
-
     updatePost(data) {
       return new Promise((resolve, reject) => {
         axios
@@ -231,7 +238,6 @@ export const useAuthStore = defineStore("auth", {
           });
       });
     },
-
     
   },
   persist: true,

@@ -21,6 +21,8 @@
         
       </div>
       <h1 class="text-gray-900">All posts</h1>
+      <input type="radio" v-model="sortBy" value="desc">
+      <input type="radio" v-model="sortBy" value="asc">
       <ul v-if="posts" class="mr-[40px]">
         <li
           v-for="post in posts"
@@ -75,12 +77,6 @@
               <span>More info about post</span>
             </router-link>
 
-            <router-link
-              :to="{ name: 'postUpdate', params: { id: post.id } }"
-              class="mainPublic px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
-            >
-              Update post
-            </router-link>
           </div>
         </li>
       </ul>
@@ -117,6 +113,7 @@ export default {
       posts:  null,
       pagination: null,
       currentPage: 1,
+      sortBy: 'desc',
     };
   },
  
@@ -133,7 +130,7 @@ export default {
     },
 
     getPostsList() {
-      this.getPosts(this.currentPage, {title: this.searchQuery}).then((response) => {
+      this.getPosts(this.currentPage, {title: this.searchQuery}, {sorter: {created_at: this.sortBy}}).then((response) => {
         this.posts = response.data;
         this.pagination = response.meta;
       });
@@ -143,7 +140,11 @@ export default {
   mounted() {
     this.getPostsList();
   },
-
+  watch: {
+    sortBy() {
+      this.getPostsList();
+    }
+  }
 };
 </script>
   

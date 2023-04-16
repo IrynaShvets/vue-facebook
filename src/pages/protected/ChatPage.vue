@@ -3,7 +3,7 @@
     <header-app class="fixed z-10 top-0 left-0 w-screen border-b-2 border-white" />
 
     <div class="bg-[#001524] flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
-      <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
+      <!-- <div class="flex sm:items-center justify-between  border-b-2 border-gray-200">
         <div class="flex items-center pt-8 space-x-4">
           <div class="flex flex-col leading-tight">
             <div class="text-2xl mt-1 flex items-center">
@@ -11,24 +11,24 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="overflow-y-auto  pt-6">
+      <div class="overflow-y-auto pt-10 pb-6 scroll-m-8 md:scroll-m-0">
         <ul v-if="messages" class="mr-[20px]">
           <li v-for="message in messages" :key="message.id" class="">
-            <p class="text-white"> FROM : {{ message.sender }}</p>
-            <p class="text-white">Created AT : {{ message.created_at }}</p> 
-            <p class="text-white">This is the message: {{ message.message }}</p>
+
+            <div class="flex">
+              <p class="text-[#a7cdf8] mr-2">{{ message.created_at }} </p> 
+              <p class="text-[#ecaf5f] text-[18px]">{{ message.sender }}</p>
+            </div>
+              
+            <div class="inline-block bg-[#a7cdf8] w-[auto] px-4 rounded-lg">
+            <p class="text-[#001524]">{{ message.message }}</p>
+            </div>
+           
           </li>
         </ul>
       </div>
-
-      <span class="text-[#e9a0a5]" v-if="errors.message">
-        {{ errors.message.toString() }}
-      </span>
-      <span class="text-[#e9a0a5]" v-if="errorsStatus">
-        {{ errorsStatus.toString() }}
-      </span>
 
       <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
         <div class="relative flex">
@@ -106,33 +106,33 @@ export default {
           }
           this.message = '';
           this.messages.push(response.data.data);
-          console.log(response);
+          // console.log(response.receiver);
 
         })
         .catch((errors) => {
+console.log(errors)
+          // if (errors.status) {
+          //   switch (errors.status) {
+          //     case 400:
+          //       this.errors.message = errors.data.errors.message;
+          //       break;
 
-          if (errors.status) {
-            switch (errors.status) {
-              case 400:
-                this.errors.message = errors.data.errors.message;
-                break;
+          //     case 401:
+          //       this.errors.message = errors.data.errors.message;
+          //       break;
 
-              case 401:
-                this.errors.message = errors.data.errors.message;
-                break;
+          //     case 422:
+          //       this.errors.message = errors.data.errors.message;
+          //       break;
 
-              case 422:
-                this.errors.message = errors.data.errors.message;
-                break;
+          //     case 500:
+          //       this.errors.name = errors.statusText;
+          //       break;
 
-              case 500:
-                this.errors.name = errors.statusText;
-                break;
-
-              default:
-                this.errorsStatus = "Another validation error";
-            }
-          }
+          //     default:
+          //       this.errorsStatus = "Another validation error";
+          //   }
+          // }
         });
 
     },
@@ -149,12 +149,10 @@ export default {
             return response;
           }
           this.messages = response.data.data
-          console.log(response.data.data)
-          
-
+          // console.log(response.data.data)
         })
-        .catch((error) => {
-          console.error(error);
+        .catch((errors) => {
+          console.log(errors)
         });
     },
 

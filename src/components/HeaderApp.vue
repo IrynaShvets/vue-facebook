@@ -6,16 +6,17 @@
           <div class="h-12 w-18">
             <router-link
               to="/"
-              active-class="active-link"
-              exact-active-class="exact-active-link"
-              class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+             
+              class="px-3 py-2 flex items-center text-xs font-bold leading-snug text-white hover:opacity-75"
             >
               <img
                 class="h-12 w-18"
                 src="https://i.gyazo.com/93114b7cff56d5426ec1f3549083e16d.png"
                 alt="logo"
               />
+              <h2 class="text-[26px]">UkrTie</h2> 
             </router-link>
+           
           </div>
           <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
             <li class="nav-item">
@@ -219,33 +220,7 @@
                           Update profile
                         </router-link>
                       </li>
-                      <li class="nav-item">
-                        <router-link
-                          to="/register"
-                          class="mainPublic px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
-                        >
-                          Register
-                        </router-link>
-                      </li>
-                      <li class="nav-item">
-                        <router-link
-                          to="/login"
-                          class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-dark hover:opacity-75"
-                        >
-                          Login
-                        </router-link>
-                      </li>
-                      <li>
-                        <div>
-                          <button
-                            type="button"
-                            class="btn btn-danger"
-                            @click="deleteUser(authUserId)"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </li>
+                      
                     </ul>
                   </div>
                 </div>
@@ -259,7 +234,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { useAuthStore } from "@/store/auth";
 import { mapState, mapActions } from "pinia";
 import { logout } from "../services/auth.service.js";
@@ -288,27 +262,6 @@ export default {
       });
     },
 
-    deleteUser() {
-      return new Promise((resolve, reject) => {
-        axios
-          .delete(`http://localhost:80/api/users/${this.authUserId}`, {
-            headers: {
-              Authorization: `Bearer ${this.getToken}`,
-            },
-          })
-          .then((response) => {
-            if (!response) {
-              return;
-            }
-            alert("Do you want to leave your account permanently?");
-
-            resolve();
-          })
-          .catch((error) => {
-            reject(error.response);
-          });
-      });
-    },
   },
 };
 </script>

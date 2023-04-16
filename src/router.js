@@ -97,6 +97,7 @@ const router = createRouter({
   routes,
   linkActiveClass: 'active',
   linkExactActiveClass: 'exact-active',
+  
 });
 
 router.beforeEach((to, from, next) => {

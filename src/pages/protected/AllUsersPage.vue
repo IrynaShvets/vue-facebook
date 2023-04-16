@@ -60,7 +60,9 @@
               </router-link>
 
               <div>
+                <span v-if="myFriend(user.id)">My friend </span>
                 <button
+                  v-else
                   type="button"
                   @click="addFriendToList(user.id)"
                   id="user.id"
@@ -125,7 +127,10 @@ export default {
       this.currentPage = event;
       this.getUsersList();
     },
-
+    myFriend(id) {
+      let index = this.friends.findIndex(friend => friend.id === id);
+      return index !== -1;
+    },
     getUsersList() {
       this.getUsers(this.currentPage, { name: this.searchQuery }).then(
         (response) => {
@@ -176,6 +181,7 @@ export default {
           if (!response.data.data) {
             return;
           }
+          this.friends = response.data.data;
         })
         .catch((error) => {
           console.log(error);

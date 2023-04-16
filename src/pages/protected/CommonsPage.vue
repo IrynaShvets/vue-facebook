@@ -70,7 +70,7 @@
       return {
         
         commons: null,
-    
+        existIndex: "",
       };
     },
   
@@ -91,14 +91,14 @@
     },
 
     addCommonToList(id) {
-    //   this.existIndex = this.commons.findIndex((el) => el.id === id);
+      this.existIndex = this.commons.findIndex((el) => el.id === id);
 
-    //   if (this.existIndex !== -1) {
-    //     alert("No need to join this community, you are in it.");
-    //   }
-    //   if (this.existIndex === -1) {
-    //     alert("You have successfully joined the community.");
-    //   }
+      if (this.existIndex !== -1) {
+        alert("No need to join this community, you are in it.");
+      }
+      if (this.existIndex === -1) {
+        alert("You have successfully joined the community.");
+      }
 
       axios
         .post(`http://localhost:80/api/common/${id}`, null, {

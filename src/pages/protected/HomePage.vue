@@ -4,25 +4,23 @@
       class="fixed z-10 top-0 left-0 w-screen border-b-2 border-gray-200"
     />
     <sidebar-home
-      class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
+      class="fixed flex justify-center w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
     <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
-      <h1>home</h1>
+      <h1 class="text-[36px] mb-4">UkrTie</h1> 
 
-      <button type="button" @click="getPdf && openModal">
-        Generete users pdf
-      </button>
+      <button type="button" @click="getPdf" class="h-[auto] w-[auto] px-4 py-2 bg-gray-700 text-white mr-4">Generete users pdf</button>
 
-      <button type="button" @click="openModal">Show pdf</button>
+      <button type="button" @click="openModal(pdf)" class="h-[auto] w-[auto] px-4 py-2 bg-gray-700 text-white">Show pdf</button>
       <div v-show="showModal">
         <div
-          class="fixed top-0 bottom-0 left-0 right-0 flex justify-center bg-[#000000da]"
+          class="fixed top-0 bottom-0 left-0 right-0 flex justify-center z-[100] bg-[#000000da]"
         >
           <div
-            class="relative bg-white h-[500px] w-[500px] p-5 rounded-lg"
+            class="relative bg-white h-[100%] w-[80%] p-5 rounded-lg"
             @click.stop
           >
-            <button class="p-2 border-0 bg-transparent absolute right-2 top-2">
+            <button type="button" @click="closeModal" class="p-2 border-0 bg-white absolute right-2 top-2">
               <svg
                 class="inline-block w-5 h-5 stroke-current stroke-0 fill-gray"
                 viewBox="0 0 32 32"
@@ -32,7 +30,8 @@
                 ></path>
               </svg>
             </button>
-            <h2 class="text-2xl text-[#1B065E] mb-4">Content.</h2>
+            <embed :src="pdf" width="100%" height="100%" type='application/pdf'>
+            
           </div>
         </div>
       </div>
@@ -56,7 +55,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["token"]),
+    ...mapState(useAuthStore, ["token", "pdf"]),
   },
 
   methods: {
@@ -68,16 +67,23 @@ export default {
           },
         })
         .then((response) => {
-          
           console.log(response);
+          if (response) {
+            alert("прпппрппр")
+          }
         })
         .catch((errors) => {
           console.error(errors);
         });
     },
 
-    openModal() {
+    openModal(pdf) {
       this.showModal = true;
+      this.pdf = pdf;
+    },
+
+    closeModal() {
+      this.showModal = false;
     },
   },
 };
