@@ -51,14 +51,26 @@ export default {
   data() {
     return {
       showModal: false,
+      pdf: null,
     };
   },
 
   computed: {
-    ...mapState(useAuthStore, ["token", "pdf"]),
+    ...mapState(useAuthStore, ["token"]),
   },
 
   methods: {
+listen() {
+  let channel = window.Echo.channel(`pdf.${this.authUserId}`);
+  channel.listen(".send-pdf", (data) => {
+    
+    console.log('msg', data.pdf);
+    // this.setPdf(data.pdf)
+   this.pdf = data.pdf;
+   console.log(this.pdf);
+  });
+},
+
     getPdf() {
       axios
         .get("http://localhost:80/api/generate/pdf", {
@@ -69,7 +81,7 @@ export default {
         .then((response) => {
           console.log(response);
           if (response) {
-            alert("прпппрппр")
+            alert("Generate pdf.")
           }
         })
         .catch((errors) => {
@@ -86,6 +98,10 @@ export default {
       this.showModal = false;
     },
   },
+
+mounted() {
+this.listen()
+}
 };
 </script>
 

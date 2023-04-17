@@ -27,7 +27,7 @@
                   type="text"
                   class="form-input"
                   required
-                  v-model="authUserName"
+                  v-model="name"
                 />
                 <span class="text-[#ff0012]" v-if="errors.name">
                   {{ errors.name.toString() }}
@@ -45,28 +45,10 @@
                   type="text"
                   class="form-input"
                   required
-                  v-model="authUserEmail"
+                  v-model="email"
                 />
                 <span class="text-[#ff0012]" v-if="errors.email">
                   {{ errors.email.toString() }}
-                </span>
-                <span class="text-[#ff0012]" v-if="errorsStatus">
-                  {{ errorsStatus.toString() }}
-                </span>
-              </div>
-
-              <div class="flex flex-col gap-2 mb-4">
-                <label for="body" class="required">Password</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="text"
-                  class="form-input"
-                  required
-                  v-model="authUserPassword"
-                />
-                <span class="text-[#ff0012]" v-if="errors.password">
-                  {{ errors.password.toString() }}
                 </span>
                 <span class="text-[#ff0012]" v-if="errorsStatus">
                   {{ errorsStatus.toString() }}
@@ -105,9 +87,9 @@
                     />
                   </label>
                 </div>
-                <div v-if="authUserImage">
+                <div v-if="image">
                   <img
-                    :src="authUserImage"
+                    :src="image"
                     class="inline-block h-10 w-10 rounded-full"
                     alt="Preview"
                   />
@@ -139,7 +121,7 @@
                       alt="Your Company"
                     />
                   </span>
-                  Save
+                  Update
                 </button>
               </div>
             </div>
@@ -165,6 +147,7 @@ export default {
 
   data() {
     return {
+      id: "",
       name: "",
       email: "",
       password: "",
@@ -183,8 +166,9 @@ export default {
 
   computed: {
     ...mapState(useAuthStore, [
-      "getToken",
+      "token",
       "authUserId",
+
       "authUserName",
       "authUserEmail",
       "authUserPassword",
@@ -204,28 +188,58 @@ export default {
       };
     },
 
-      handleSubmit() {
-        const userData = {
-        name: this.authUserName,
-        email: this.authUserEmail,
-        password: this.authUserPassword,
-        image: this.authUserImage,
-      };
+    getUser() {
       return new Promise((resolve, reject) => {
         axios
-          .patch(`http://localhost:80/api/users/${this.$route.params.id}`, { ...userData}, {
+          .get(`http://localhost:80/api/users/${this.authUserId}`, {
             headers: {
-              Authorization: `Bearer ${this.getToken}`,
+              Authorization: `Bearer ${this.token}`,
             },
           })
           .then((response) => {
             if (!response) {
               return;
             }
+
+            this.id = response.data.data.id;
+            this.email = response.data.data.email;
+            this.name = response.data.data.name;
+            this.image = response.data.data.image;
+            
+            resolve();
+          })
+          .catch((error) => {
+            reject(error.response);
+          });
+      });
+    },
+
+      handleSubmit() {
+        const userData = {
+        name: this.name,
+        email: this.email,
+        image: this.image,
+      };
+      return new Promise((resolve, reject) => {
+        axios
+          .put(`http://localhost:80/api/users/${this.$route.params.id}`, { ...userData}, {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          })
+          .then((response) => {
+            if (!response) {
+              return;
+            }
+
+            // this.id = response.data.data.id;
+            this.email = response.data.data.email;
+            this.name = response.data.data.name;
+            this.image = response.data.data.image;
             
             // this.authUserName = response.data.data.name;
             // this.authUserEmail = response.data.data.email;
-            // this.authUserPassword = response.data.data.password;
+           
             // this.authUserImage = response.data.data.authUserImage;
             
             resolve();
@@ -269,6 +283,12 @@ export default {
           });
       });
     },
+
+
+  },
+
+  mounted() {
+    this.getUser();
   },
 };
 </script>

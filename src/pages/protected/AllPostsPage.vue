@@ -21,8 +21,14 @@
         
       </div>
       <h1 class="text-gray-900">All posts</h1>
-      <input type="radio" v-model="sortBy" value="desc">
+      <label>
+        Desc
+        <input type="radio" v-model="sortBy" value="desc">
+      </label>
+      <label>
+        Asc
       <input type="radio" v-model="sortBy" value="asc">
+    </label>
       <ul v-if="posts" class="mr-[40px]">
         <li
           v-for="post in posts"

@@ -46,17 +46,37 @@
 
       <section class="py-[40px]">
         <h2 class="text-[20px] mb-6">My communities</h2>
-        <ul v-if="commons" class="grid grid-cols-6 gap-4">
+        <ul v-if="commons" class="grid grid-cols-4 gap-4">
           <li
             v-for="common in commons"
             :key="common.id"
-            class="flex items-center cursor-pointer text-2xl bg-red-200 p-2 w-[180px] h-[auto] shadow-[10px_10px_8px_2px_rgba(0,0,0,0.3)] hover:scale-[1.05] hover:transition hover:duration-700 hover:ease-in-out"
+            class="flex items-center cursor-pointer relative text-2xl bg-red-200 p-2 w-[280px] h-[auto] shadow-[10px_10px_8px_2px_rgba(0,0,0,0.3)] hover:scale-[1.05] hover:transition hover:duration-700 hover:ease-in-out"
           >
-            <router-link
-              :to="{ name: 'common', params: { id: common.id } }"
-              class="w-[180px] h-[auto]"
-            >
+            
               <p>{{ common.title }}</p>
+              <button type="button" @click="deleteCommon(common.id)" class="absolute top-2 right-[40px]">
+          <svg
+                class="inline-block w-7 h-7 stroke-current stroke-0 fill-black hover:fill-[#00000070]"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M21 5c0.276 0 0.525 0.111 0.707 0.293s0.293 0.431 0.293 0.707v12c0 0.276-0.111 0.525-0.293 0.707s-0.431 0.293-0.707 0.293h-12.546l-6.125-7 6.125-7zM21 3h-13c-0.3 0-0.568 0.132-0.753 0.341l-7 8c-0.333 0.38-0.326 0.942 0 1.317l7 8c0.198 0.226 0.474 0.341 0.753 0.342h13c0.828 0 1.58-0.337 2.121-0.879s0.879-1.293 0.879-2.121v-12c0-0.828-0.337-1.58-0.879-2.121s-1.293-0.879-2.121-0.879zM11.293 9.707l2.293 2.293-2.293 2.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l2.293-2.293 2.293 2.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-2.293-2.293 2.293-2.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-2.293 2.293-2.293-2.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"
+                ></path>
+              </svg>
+          </button>
+
+            <router-link
+              :to="{ name: 'common', params: { id: common.id }  }"
+              class="absolute top-2 right-[10px]"
+            >
+              <svg
+                class="inline-block w-7 h-7 stroke-current stroke-0 fill-black hover:fill-[#00000070]"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 12c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414zM14 5c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414zM14 19c0-0.552-0.225-1.053-0.586-1.414s-0.862-0.586-1.414-0.586-1.053 0.225-1.414 0.586-0.586 0.862-0.586 1.414 0.225 1.053 0.586 1.414 0.862 0.586 1.414 0.586 1.053-0.225 1.414-0.586 0.586-0.862 0.586-1.414z"
+                ></path>
+              </svg>
             </router-link>
           </li>
         </ul>
@@ -202,10 +222,25 @@ export default {
           if (!response) {
             return;
           }
+          this.getUser();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
-          // this.posts = response.data.data;
-          console.log(response.data.data);
-          //alert("Do you want to delete friend?");
+    deleteCommon(id) {
+      axios
+        .delete(`http://localhost:80/api/common/${id}/delete`, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then((response) => {
+          if (!response) {
+            return;
+          }
+          this.commons = response.data.data;
         })
         .catch((error) => {
           console.log(error);

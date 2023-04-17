@@ -22,6 +22,8 @@
         </form>
       </div>
       <h1 class="text-gray-900">All Users</h1>
+
+
       <ul v-if="users" class="mr-[40px]">
         <li v-for="user in users" :id="user.id" :key="user.id" class="mb-10">
           <div
@@ -187,6 +189,7 @@ export default {
           console.log(error);
         });
     },
+
   },
 
   mounted() {

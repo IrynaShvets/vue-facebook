@@ -12,7 +12,7 @@ export const useAuthStore = defineStore("auth", {
     userPassword: "",
     userCreated: "",
 
-    pdf: null,
+    // pdf: null,
 
     postId: null,
     postTitle: null,
@@ -37,9 +37,9 @@ export const useAuthStore = defineStore("auth", {
   },
 
   actions: {
-    setPdf(pdf) {
-      this.pdf = pdf;
-    },
+    // setPdf(pdf) {
+    //   this.pdf = pdf;
+    // },
 
     setToken(token) {
       this.token = token;
