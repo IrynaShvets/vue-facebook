@@ -54,12 +54,9 @@
                       <h2 class="mt-1 text-gray-900">{{ user.email }}</h2>
                     </div>
                   </div>
-
-                 
                 </div>
               </li>
             </ul>
-            
           </div>
         </div>
       </div>
@@ -102,11 +99,6 @@ export default {
             }
             this.title = response.data.data.title;
             this.users = response.data.data.users;
-            //   this.id = response.data.data.id;
-            //   this.name = response.data.data.name;
-            //   this.email = response.data.data.email;
-            //   this.image = response.data.data.image;
-            console.log(response);
             resolve();
           })
           .catch((error) => {

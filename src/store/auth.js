@@ -4,42 +4,24 @@ import { defineStore } from "pinia";
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: null,
-    user: {},
-    userName: "",
     userId: "",
-    userImage: null,
+    userName: "",
     userEmail: "",
-    userPassword: "",
-    userCreated: "",
-
-    // pdf: null,
-
-    postId: null,
-    postTitle: null,
-    postDescription: null,
-    postImage: null,
-    postBody: null,
-
-    post: null,
-    common: null,
+    userImage: null,
+    pdf: null,
   }),
 
   getters: {
-    authUserName: (state) => state.userName,
     authUserId: (state) => state.userId,
-    authUserImage: (state) => state.userImage,
+    authUserName: (state) => state.userName,
     authUserEmail: (state) => state.userEmail,
-    authUserPassword: (state) => state.userPassword,
-    authUserCreated: (state) => state.userCreated,
-
-    getToken: (state) => state.token,
-    
+    authUserImage: (state) => state.userImage,    
   },
 
   actions: {
-    // setPdf(pdf) {
-    //   this.pdf = pdf;
-    // },
+    setPdf(pdf) {
+      this.pdf = pdf;
+    },
 
     setToken(token) {
       this.token = token;
@@ -61,25 +43,12 @@ export const useAuthStore = defineStore("auth", {
       this.userEmail = userEmail;
     },
 
-    setUserPassword(userPassword) {
-      this.userPassword = userPassword;
-    },
-
-    setUserCreated(userCreated) {
-      this.userCreated = userCreated;
-    },
-
     deleteState() {
-      this.userName = "";
       this.token = null;
       this.userId = "";
-      this.userImage = null;
+      this.userName = "";
       this.userEmail = "";
-      this.userPassword = "";
-      this.userCreated = "";
-      this.post = null;
-      this.friends = null;
-      this.common = null;
+      this.userImage = null;
       this.pdf = null;
     },
 

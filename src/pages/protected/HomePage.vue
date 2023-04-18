@@ -51,25 +51,14 @@ export default {
   data() {
     return {
       showModal: false,
-      pdf: null,
     };
   },
 
   computed: {
-    ...mapState(useAuthStore, ["token"]),
+    ...mapState(useAuthStore, ["token", "pdf"]),
   },
 
   methods: {
-listen() {
-  let channel = window.Echo.channel(`pdf.${this.authUserId}`);
-  channel.listen(".send-pdf", (data) => {
-    
-    console.log('msg', data.pdf);
-    // this.setPdf(data.pdf)
-   this.pdf = data.pdf;
-   console.log(this.pdf);
-  });
-},
 
     getPdf() {
       axios
@@ -99,9 +88,6 @@ listen() {
     },
   },
 
-mounted() {
-this.listen()
-}
 };
 </script>
 

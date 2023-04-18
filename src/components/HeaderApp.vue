@@ -1,12 +1,11 @@
 <template>
-  <header class="flex flex-wrap bg-[#001524]">
+  <header class="flex w-full bg-[#001524]">
     <div class="flex items-center justify-between w-full px-10">
       <nav class="relative flex items-center justify-center">
         <div v-if="authUserName" class="flex items-center justify-center">
           <div class="h-12 w-18">
             <router-link
               to="/"
-             
               class="px-3 py-2 flex items-center text-xs font-bold leading-snug text-white hover:opacity-75"
             >
               <img
@@ -14,10 +13,10 @@
                 src="https://i.gyazo.com/93114b7cff56d5426ec1f3549083e16d.png"
                 alt="logo"
               />
-              <h2 class="text-[26px]">UkrTie</h2> 
+              <h2 class="text-[26px]">UkrTie</h2>
             </router-link>
-           
           </div>
+
           <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
             <li class="nav-item">
               <div className="group relative text-2xl">
@@ -28,8 +27,8 @@
                   class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 >
                   <svg
-                  active-class="active-link"
-                  exact-active-class="exact-active-link"
+                    active-class="active-link"
+                    exact-active-class="exact-active-link"
                     class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
                     viewBox="0 0 24 24"
                   >
@@ -91,6 +90,9 @@
                 </ul>
               </div>
             </li>
+          </ul>
+
+          <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
             <li class="nav-item">
               <div className="group relative text-2xl">
                 <router-link
@@ -162,6 +164,7 @@
               </div>
             </li>
           </ul>
+
           <div class="flex items-center">
             <div v-if="authUserImage" class="flex -space-x-1 overflow-hidden">
               <img
@@ -220,7 +223,6 @@
                           Update profile
                         </router-link>
                       </li>
-                      
                     </ul>
                   </div>
                 </div>
@@ -261,7 +263,6 @@ export default {
         alert("You have successfully logged out of your account.");
       });
     },
-
   },
 };
 </script>

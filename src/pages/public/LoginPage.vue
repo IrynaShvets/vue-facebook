@@ -120,6 +120,7 @@ export default {
       "setToken",
       "setUserName",
       "setUserEmail",
+      "setUserImage",
       "setUserId",
     ]),
 
@@ -136,6 +137,7 @@ export default {
             this.setUserName(response.user.name);
             this.setUserEmail(response.user.email);
             this.setUserId(response.user.id);
+            this.setUserImage(response.user.image);
             this.$router.push({ name: "home" });
           }
         })

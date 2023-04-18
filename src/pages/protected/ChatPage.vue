@@ -3,15 +3,6 @@
     <header-app class="fixed z-10 top-0 left-0 w-screen border-b-2 border-white" />
 
     <div class="bg-[#001524] flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
-      <!-- <div class="flex sm:items-center justify-between  border-b-2 border-gray-200">
-        <div class="flex items-center pt-8 space-x-4">
-          <div class="flex flex-col leading-tight">
-            <div class="text-2xl mt-1 flex items-center">
-              <span class="text-gray-700 mr-3">Name</span>
-            </div>
-          </div>
-        </div>
-      </div> -->
 
       <div class="overflow-y-auto pt-10 pb-6 scroll-m-8 md:scroll-m-0">
         <ul v-if="messages" class="mr-[20px]">
@@ -79,7 +70,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["getToken", "authUserId"]),
+    ...mapState(useAuthStore, ["token", "authUserId"]),
   },
 
   methods: {
@@ -89,14 +80,13 @@ export default {
         receiver_id: this.receiver_id,
         message: this.message,
       };
-      // this.messages.value.push(user_message);
       axios
         .post(
           "http://localhost:80/api/chat/send",
             user_message,
           {
             headers: {
-              Authorization: `Bearer ${this.getToken}`,
+              Authorization: `Bearer ${this.token}`,
             },
           }
         )
@@ -106,33 +96,10 @@ export default {
           }
           this.message = '';
           this.messages.push(response.data.data);
-          // console.log(response.receiver);
 
         })
         .catch((errors) => {
-console.log(errors)
-          // if (errors.status) {
-          //   switch (errors.status) {
-          //     case 400:
-          //       this.errors.message = errors.data.errors.message;
-          //       break;
-
-          //     case 401:
-          //       this.errors.message = errors.data.errors.message;
-          //       break;
-
-          //     case 422:
-          //       this.errors.message = errors.data.errors.message;
-          //       break;
-
-          //     case 500:
-          //       this.errors.name = errors.statusText;
-          //       break;
-
-          //     default:
-          //       this.errorsStatus = "Another validation error";
-          //   }
-          // }
+          console.log(errors)
         });
 
     },
@@ -148,8 +115,7 @@ console.log(errors)
           if (!response) {
             return response;
           }
-          this.messages = response.data.data
-          // console.log(response.data.data)
+          this.messages = response.data.data;
         })
         .catch((errors) => {
           console.log(errors)
@@ -165,11 +131,7 @@ console.log(errors)
           created_at: data.created_at
         });
         console.log('msg', data);
-        // this.message = message;
-        // console.log(this.message);
-// this.messages.value.push({   //         message: this.message,   
-      //       });
-        
+      
       });
     },
   },

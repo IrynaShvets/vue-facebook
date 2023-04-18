@@ -58,7 +58,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["getToken"]),
+    ...mapState(useAuthStore, ["token"]),
   },
 
   methods: {
@@ -67,7 +67,7 @@ export default {
         axios
           .get(`http://localhost:80/api/users/${this.$route.params.id}`, {
             headers: {
-              Authorization: `Bearer ${this.getToken}`,
+              Authorization: `Bearer ${this.token}`,
             },
           })
           .then((response) => {
@@ -80,7 +80,6 @@ export default {
             this.image = response.data.data.image;
             this.created_at = response.data.data.created_at;
             this.friends = response.data.data.friends;
-            console.log();
 
             resolve();
           })

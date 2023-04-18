@@ -3,11 +3,10 @@
     <header-app
       class="fixed z-10 top-0 left-0 w-screen border-b-2 border-white"
     />
-    <sidebar-home
-      class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
+      <sidebar-home
+      class="fixed flex justify-center w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
-
-    <section class="absolute overflow-y-auto left-[290px] top-[80px] right-[0]">
+    <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
       <div class="">
         <form @click.prevent="getUsersList" class="relative mr-[40px]">
           <input
@@ -98,7 +97,6 @@ import axios from "axios";
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../../store/auth";
-// import { getListFriends } from "../../services/user.service";
 
 export default {
   name: "AllUsersPage",
@@ -119,7 +117,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["getToken", "authUserId"]),
+    ...mapState(useAuthStore, ["token", "authUserId"]),
   },
 
   methods: {
@@ -147,7 +145,7 @@ export default {
         axios
           .get(`http://localhost:80/api/users/${this.authUserId}`, {
             headers: {
-              Authorization: `Bearer ${this.getToken}`,
+              Authorization: `Bearer ${this.token}`,
             },
           })
           .then((response) => {
@@ -176,7 +174,7 @@ export default {
       axios
         .post(`http://localhost:80/api/friend/${id}`, null, {
           headers: {
-            Authorization: `Bearer ${this.getToken}`,
+            Authorization: `Bearer ${this.token}`,
           },
         })
         .then((response) => {
@@ -194,7 +192,6 @@ export default {
 
   mounted() {
     this.getUsersList();
-    // getListFriends();
     this.getFriends();
   },
 };

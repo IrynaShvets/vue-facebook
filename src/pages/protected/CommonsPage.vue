@@ -4,10 +4,9 @@
         class="fixed z-10 top-0 left-0 w-screen border-b-2 border-white"
       />
       <sidebar-home
-        class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
-      />
-  
-      <section class="absolute overflow-y-auto left-[290px] top-[80px] right-[0]">
+      class="fixed flex justify-center w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
+    />
+    <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
 
         <h1 class="text-gray-900">All Community</h1>
         <ul v-if="commons" class="mr-[40px]">
@@ -48,8 +47,6 @@
             
           </li>
         </ul>
-  
-        
       </section>
     </div>
   </template>
@@ -58,7 +55,6 @@
   import axios from "axios";
   import { mapState, mapActions } from "pinia";
   import { useAuthStore } from "../../store/auth";
-  // import { getListFriends } from "../../services/user.service";
   
   export default {
     name: "CommonsPage",
@@ -115,14 +111,10 @@
           console.log(error);
         });
     },
-
-
     },
   
     mounted() {
         this.getCommonsList();
-      // getListFriends();
-      //yfна отримання списку своїх комуніті +  пост на додавання себе до комуніті  так як френдс
     },
   };
   </script>

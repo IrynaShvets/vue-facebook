@@ -2,10 +2,9 @@
   <div class="relative">
     <header-app class="fixed z-10 top-0 left-0 w-screen border-b-2 border-white" />
     <sidebar-home
-      class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
+      class="fixed flex justify-center w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
-
-    <section class="absolute overflow-y-auto left-[290px] top-[80px] right-[0]">
+    <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
       <div>
         <form @click.prevent="getPostsList" class="relative mr-[40px]">
           <input
@@ -124,7 +123,7 @@ export default {
   },
  
   computed: {
-    ...mapState(useAuthStore, ["getToken"]),
+    ...mapState(useAuthStore, ["token"]),
   },
 
   methods: {
@@ -136,7 +135,7 @@ export default {
     },
 
     getPostsList() {
-      this.getPosts(this.currentPage, {title: this.searchQuery}, {sorter: {created_at: this.sortBy}}).then((response) => {
+      this.getPosts(this.currentPage, {title: this.searchQuery}, {sorter: this.sortBy}).then((response) => {
         this.posts = response.data;
         this.pagination = response.meta;
       });

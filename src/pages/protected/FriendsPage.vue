@@ -4,9 +4,9 @@
       class="fixed z-10 top-0 left-0 w-screen border-b-2 border-b-white"
     />
     <sidebar-home
-      class="fixed w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
+      class="fixed flex justify-center w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
-    <section class="absolute overflow-y-auto left-[270px] top-[80px] right-[0]">
+    <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
       <h1 class="text-[30px]">Friends</h1>
       <ul v-if="friends" class="mr-[20px]">
         <li v-for="friend in friends" :key="friend.id" class="mb-10">
@@ -78,7 +78,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["getToken", "authUserId"]),
+    ...mapState(useAuthStore, ["token", "authUserId"]),
   },
 
   methods: {
@@ -90,12 +90,13 @@ export default {
         },
       });
     },
+
     getFriends() {
       return new Promise((resolve, reject) => {
         axios
           .get(`http://localhost:80/api/users/${this.authUserId}`, {
             headers: {
-              Authorization: `Bearer ${this.getToken}`,
+              Authorization: `Bearer ${this.token}`,
             },
           })
           .then((response) => {
@@ -115,17 +116,14 @@ export default {
       axios
         .delete(`http://localhost:80/api/friend/${id}`, {
           headers: {
-            Authorization: `Bearer ${this.getToken}`,
+            Authorization: `Bearer ${this.token}`,
           },
         })
         .then((response) => {
           if (!response) {
             return;
           }
-
           this.friends = response.data.data;
-          console.log(response.data.data);
-          //alert("Do you want to delete friend?");
         })
         .catch((error) => {
           console.log(error);
@@ -135,7 +133,6 @@ export default {
 
   mounted() {
     this.getFriends();
-    // this.deleteFriend();
   },
 };
 </script>

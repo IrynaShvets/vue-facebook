@@ -183,7 +183,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["userToken", "authUserId"]),
+    ...mapState(useAuthStore, ["token", "authUserId"]),
   },
 
   methods: {
@@ -253,14 +253,6 @@ export default {
     },
   },
 
-  watch: {
-    someObject: {
-      handler(newValue, oldValue) {
-        console.log(newValue, oldValue)
-      },
-      deep: true
-    }
-  },
 };
 </script>
 

@@ -16,7 +16,7 @@
                 <h2
                   class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900"
                 >
-                  Create post
+                  Create common
                 </h2>
   
                 <div class="flex flex-col gap-2 mb-4">
@@ -81,19 +81,16 @@
       return {
         title: "",
         
-        
         errors: {
           title: "",
-         
         },
-       
         errorsStatus: "",
         
       };
     },
   
     computed: {
-      ...mapState(useAuthStore, ["userToken", "authUserId"]),
+      ...mapState(useAuthStore, ["token", "authUserId"]),
     },
   
     methods: {

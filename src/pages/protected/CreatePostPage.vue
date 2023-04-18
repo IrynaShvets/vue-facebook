@@ -180,7 +180,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAuthStore, ["userToken", "authUserId"]),
+    ...mapState(useAuthStore, ["token", "authUserId"]),
   },
 
   methods: {
