@@ -105,20 +105,6 @@
           </button>
 
             <router-link
-              :to="{ name: 'postUpdate', params: { id: post.id } }"
-              class="absolute top-2 right-[40px]"
-            >
-              <svg
-                class="inline-block w-6 h-6 stroke-current stroke-0 fill-black hover:fill-[#00000070]"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M12.3 3.7l4 4-12.3 12.3h-4v-4l12.3-12.3zM13.7 2.3l2.3-2.3 4 4-2.3 2.3-4-4z"
-                ></path>
-              </svg>
-            </router-link>
-
-            <router-link
               :to="{ name: 'post', params: { id: post.id } }"
               class="absolute top-2 right-[10px]"
             >

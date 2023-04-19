@@ -21,11 +21,11 @@
       </div>
       <h1 class="text-gray-900">All posts</h1>
       <label>
-        Desc
+        Latest posts
         <input type="radio" v-model="sortBy" value="desc">
       </label>
       <label>
-        Asc
+        Oldest posts
       <input type="radio" v-model="sortBy" value="asc">
     </label>
       <ul v-if="posts" class="mr-[40px]">

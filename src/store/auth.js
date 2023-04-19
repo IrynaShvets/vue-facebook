@@ -15,7 +15,8 @@ export const useAuthStore = defineStore("auth", {
     authUserId: (state) => state.userId,
     authUserName: (state) => state.userName,
     authUserEmail: (state) => state.userEmail,
-    authUserImage: (state) => state.userImage,    
+    authUserImage: (state) => state.userImage, 
+    getPdf: (state) => state.pdf,    
   },
 
   actions: {
@@ -172,35 +173,6 @@ export const useAuthStore = defineStore("auth", {
             this.common = response.data.common;
             resolve();
             
-          })
-          .catch((error) => {
-            reject(error.response);
-          });
-      });
-    },
-
-    updatePost(data) {
-      return new Promise((resolve, reject) => {
-        axios
-          .patch(
-            `http://localhost:80/api/post/${this.getPostById}/update`,
-            {
-              ...data,
-            },
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${this.token}`,
-              },
-            }
-          )
-          .then((response) => {
-            if (!response) {
-              return;
-            }
-            this.post = response.data.post;
-            console.log(response);
-            resolve();
           })
           .catch((error) => {
             reject(error.response);

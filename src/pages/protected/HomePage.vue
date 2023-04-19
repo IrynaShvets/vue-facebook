@@ -31,7 +31,6 @@
               </svg>
             </button>
             <embed :src="pdf" width="100%" height="100%" type='application/pdf'>
-            
           </div>
         </div>
       </div>
@@ -69,9 +68,6 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          if (response) {
-            alert("Generate pdf.")
-          }
         })
         .catch((errors) => {
           console.error(errors);

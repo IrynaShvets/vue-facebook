@@ -1,8 +1,7 @@
 <template>
-  <header class="flex w-full bg-[#001524]">
-    <div class="flex items-center justify-between w-full px-10">
-      <nav class="relative flex items-center justify-center">
-        <div v-if="authUserName" class="flex items-center justify-center">
+  <header class="w-full px-10 py-2 bg-[#001524]">
+      <nav class="">
+        <div v-if="authUserName" class="flex justify-between">
           <div class="h-12 w-18">
             <router-link
               to="/"
@@ -29,7 +28,7 @@
                   <svg
                     active-class="active-link"
                     exact-active-class="exact-active-link"
-                    class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
+                    class="inline-block w-8 h-8 stroke-current stroke-0 fill-white"
                     viewBox="0 0 24 24"
                   >
                     <path
@@ -41,7 +40,7 @@
                   className="rounded absolute hidden text-gray-700 pt-1 group-hover:block w-56"
                 >
                   <li
-                    className="bg-gray-600 hover:bg-gray-400  py-2 px-4 cursor-pointer"
+                    className="bg-gray-600 hover:bg-gray-400  py-1 px-1 cursor-pointer"
                   >
                     <router-link
                       to="/profile"
@@ -64,7 +63,7 @@
                   class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 >
                   <svg
-                    class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
+                    class="inline-block w-8 h-8 stroke-current stroke-0 fill-white"
                     viewBox="0 0 32 32"
                   >
                     <path
@@ -93,7 +92,7 @@
           </ul>
 
           <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
-            <li class="nav-item">
+            <li class="flex items-center nav-item mr-4">
               <div className="group relative text-2xl">
                 <router-link
                   to="/common/create"
@@ -102,12 +101,10 @@
                   class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 >
                   <svg
-                    class="inline-block w-10 h-10 stroke-current stroke-0 fill-white"
-                    viewBox="0 0 20 20"
+                    class="inline-block w-8 h-8 stroke-current stroke-0 fill-white"
+                    viewBox="0 0 32 32"
                   >
-                    <path
-                      d="M10 15l-4 4v-4h-4c-1.105 0-2-0.895-2-2v0-10c0-1.1 0.9-2 2-2h16c1.105 0 2 0.895 2 2v0 10c0 1.105-0.895 2-2 2v0h-8zM5 7v2h2v-2h-2zM9 7v2h2v-2h-2zM13 7v2h2v-2h-2z"
-                    ></path>
+                    <path d="M24 12.977c-3.866 0-7 3.158-7 7.055 0 2.22 1.020 4.197 2.609 5.491-2.056 1.525-3.609 2.488-3.609 2.488s-14-8.652-14-15.622c0-4.2 2.583-8.399 7.5-8.399 4.5 0 6.5 4.296 6.5 4.296s1.75-4.296 6.5-4.296 7.416 4.115 7.416 8.399c0 0.958-0.272 1.943-0.716 2.932-1.281-1.436-3.134-2.344-5.2-2.344zM24 13.984c3.313 0 6 2.707 6 6.047s-2.687 6.048-6 6.048c-3.314 0-6-2.708-6-6.048s2.686-6.047 6-6.047zM21 21.039h2v2.016h2v-2.016h2v-2.016h-2v-2.016h-2v2.016h-2v2.016z"></path>
                   </svg>
                 </router-link>
                 <ul
@@ -128,7 +125,7 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mr-4">
               <div className="group relative text-2xl">
                 <router-link
                   to="/posts-create"
@@ -166,7 +163,7 @@
           </ul>
 
           <div class="flex items-center">
-            <div v-if="authUserImage" class="flex -space-x-1 overflow-hidden">
+            <div v-if="authUserImage" class="flex -space-x-1 overflow-hidden mr-4">
               <img
                 class="inline-block h-10 w-10 rounded-full"
                 :src="authUserImage"
@@ -204,7 +201,7 @@
                   <div>
                     <button
                       @click="handleLogout"
-                      class="py-1 px-2 rounded bg-dark"
+                      class="py-1 px-2 rounded bg-dark border-0 focus:border-0 outline-0 focus:outline-0"
                     >
                       Logout
                     </button>
@@ -231,7 +228,6 @@
           </div>
         </div>
       </nav>
-    </div>
   </header>
 </template>
 

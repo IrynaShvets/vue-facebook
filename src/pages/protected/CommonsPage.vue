@@ -26,21 +26,21 @@
               <div class="flex">
                 <router-link
                   :to="{ name: 'common', params: { id: common.id } }"
-                  class="flex flex-1 items-center rounded transition-all duration-500 bg-gradient-to-br to-white via-black from-yellow-500 bg-size-200 hover:bg-right-bottom p-2 border-r-2 border-white text-gray-800 hover:text-white"
+                  class="flex flex-1 items-center rounded transition-all duration-500 bg-gradient-to-br to-white via-black from-blue-400 bg-size-200 hover:bg-right-bottom p-2 border-r-2 border-white text-gray-800 hover:text-white"
                 >
                   <span>More info about community</span>
                 </router-link>
-                </div>
-  
                 <div>
                   <button
                     type="button"
                     @click="addCommonToList(common.id)"
                     id="common.id"
-                    class="flex flex-1 items-center rounded p-2 transition-all duration-500 bg-gradient-to-br to-white via-black from-yellow-500 bg-size-200 hover:bg-right-bottom text-gray-800 hover:text-white"
+                    class="flex flex-1 items-center rounded p-2 transition-all duration-500 bg-gradient-to-br to-white via-black from-blue-400 bg-size-200 hover:bg-right-bottom text-gray-800 hover:text-white"
                   >
                     Add common
                   </button>
+                </div>
+                  
                 </div>
 
               </div>

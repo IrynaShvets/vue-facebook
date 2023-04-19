@@ -65,11 +65,6 @@ const routes = [
     component: () => import("@/pages/protected/CreateCommonPage.vue"),
   },
   {
-    path: "/post-update/:id",
-    name: "postUpdate",
-    component: () => import("@/pages/protected/UpdatePostPage.vue"),
-  },
-  {
     path: "/friends",
     name: "friends",
     component: () => import("@/pages/protected/FriendsPage.vue"),

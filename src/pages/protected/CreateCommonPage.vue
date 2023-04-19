@@ -36,8 +36,7 @@
                     {{ errorsStatus.toString() }}
                   </span>
                 </div>
-  
-                
+
                 <div class="border-t h-[1px] my-4"></div>
   
                 <div>
@@ -104,12 +103,30 @@
   
         this.createCommon(commonData)
           .then(() => {
-            
             this.$router.push({ name: "home" });
           })
           .catch((errors) => {
-  
               console.log(errors)
+              switch (errors.status) {
+            case 400:
+              this.errors.title = errors.data.error.title;
+              break;
+
+            case 401:
+              this.errors.title = errors.data.message;
+              break;
+
+            case 422:
+              this.errors.title = errors.data.errors.title;
+              break;
+
+            case 500:
+              this.errors.title = errors.statusText;
+              break;
+
+            default:
+              this.errorsStatus = "Another validation error";
+          }
         });
       },
     },

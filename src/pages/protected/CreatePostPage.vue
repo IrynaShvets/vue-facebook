@@ -25,7 +25,7 @@
                   id="title"
                   name="title"
                   type="text"
-                  class="form-input"
+                  class="form-input border-0 focus:border-0 outline-0 focus:outline-0"
                   required
                   v-model="title"
                 />
@@ -43,7 +43,7 @@
                   id="description"
                   name="description"
                   type="text"
-                  class="form-input"
+                  class="form-input border-0 focus:border-0 outline-0 focus:outline-0"
                   required
                   v-model="description"
                 ></textarea>
@@ -61,7 +61,7 @@
                   id="body"
                   name="body"
                   type="text"
-                  class="form-input"
+                  class="form-input border-0 focus:border-0 outline-0 focus:outline-0"
                   required
                   v-model="body"
                 ></textarea>
@@ -126,7 +126,7 @@
               <div>
                 <button
                   type="submit"
-                  class="group relative flex w-full bg-indigo-600 hover:bg-indigo-500 justify-center rounded-md text-gray-900 px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  class="group relative flex w-full bg-indigo-600 hover:bg-indigo-500 justify-center rounded-md text-gray-900 px-3 py-2 text-sm font-semibold border-0 focus:border-0 outline-0 focus:outline-0"
                 >
                   <span
                     class="absolute inset-y-0 left-0 flex items-center pl-3"
@@ -205,7 +205,7 @@ export default {
 
       this.createPost(postData)
         .then(() => {
-          this.$router.push({ name: "posts" });
+          this.$router.push({ name: "home" });
         })
         .catch((errors) => {
 

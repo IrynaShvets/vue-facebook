@@ -4,7 +4,7 @@
 
     <div class="bg-[#001524] flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
 
-      <div class="overflow-y-auto pt-10 pb-6 scroll-m-8 md:scroll-m-0">
+      <div class="overflow-y-auto pt-14 pb-6 scroll-m-8 md:scroll-m-0">
         <ul v-if="messages" class="mr-[20px]">
           <li v-for="message in messages" :key="message.id" class="">
 
@@ -108,7 +108,7 @@ export default {
       axios
         .get(`http://localhost:80/api/chat/${this.receiver_id}`, {
           headers: {
-            Authorization: `Bearer ${this.getToken}`,
+            Authorization: `Bearer ${this.token}`,
           },
         })
         .then((response) => {
