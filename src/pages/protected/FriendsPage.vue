@@ -6,8 +6,8 @@
     <sidebar-home
       class="fixed flex justify-center w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
-    <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
-      <h1 class="text-[30px]">Friends</h1>
+    <section class="absolute overflow-y-auto top-[100px] w-[70%] right-[5%]">
+      <h1 class="text-[30px] text-[30px] py-4">Friends</h1>
       <ul v-if="friends" class="mr-[20px]">
         <li v-for="friend in friends" :key="friend.id" class="mb-10">
           <div

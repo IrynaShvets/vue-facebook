@@ -4,7 +4,7 @@
     <sidebar-home
       class="fixed flex justify-center w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
-    <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
+    <section class="absolute overflow-y-auto top-[100px] w-[70%] right-[5%]">
       <div>
         <form @click.prevent="getPostsList" class="relative mr-[40px]">
           <input
@@ -19,7 +19,7 @@
         </form>
         
       </div>
-      <h1 class="text-gray-900">All posts</h1>
+      <h1 class="text-gray-900 text-[30px] py-4">All posts</h1>
       <label>
         Latest posts
         <input type="radio" v-model="sortBy" value="desc">

@@ -93,7 +93,7 @@
             class="relative flex items-center cursor-pointer rounded w-[540px] h-[350px] shadow-[10px_10px_8px_2px_rgba(0,0,0,0.3)]"
           >
             
-          <button type="button" @click="deletePost(post.id)" class="absolute top-2 right-[70px]">
+          <button type="button" @click="deletePost(post.id)" class="absolute top-2 right-[40px]">
           <svg
                 class="inline-block w-7 h-7 stroke-current stroke-0 fill-black hover:fill-[#00000070]"
                 viewBox="0 0 24 24"

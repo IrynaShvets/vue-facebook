@@ -6,7 +6,7 @@
       <sidebar-home
       class="fixed flex justify-center w-[250px] h-[100%] overflow-y-auto bg-[#001524]"
     />
-    <section class="absolute overflow-y-auto top-[80px] w-[70%] right-[5%]">
+    <section class="absolute overflow-y-auto top-[100px] w-[70%] right-[5%]">
       <div class="">
         <form @click.prevent="getUsersList" class="relative mr-[40px]">
           <input
@@ -20,8 +20,7 @@
           <button type="submit" class="w-[170px] h-[100%] absolute right-[0] transition-all duration-500 bg-gradient-to-br to-white via-black from-yellow-400 bg-size-200 hover:bg-right-bottom text-gray-800 hover:text-white">Search</button>
         </form>
       </div>
-      <h1 class="text-gray-900">All Users</h1>
-
+      <h1 class="text-gray-900 text-[30px] py-4">All Users</h1>
 
       <ul v-if="users" class="mr-[40px]">
         <li v-for="user in users" :id="user.id" :key="user.id" class="mb-10">
